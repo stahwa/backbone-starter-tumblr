@@ -1,0 +1,91 @@
+@import '../../site/styles/shared';
+
+/* ===== LAYOUT ========= */
+
+.show_view {
+
+}
+
+.slide_view {
+	.main_container {
+		position: relative;
+		// overflow: hidden;
+		.main_comp {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+
+  		// @include transition(transform 0.5s cubic-bezier(0.465, 0.183, 0.153, 0.946));
+  		@include transitionTransform(0.5s cubic-bezier(0.465, 0.183, 0.153, 0.946));
+  		&.left {
+  			@include transform(translateX(100%));
+  		}
+  		&.right {
+  			@include transform(translateX(-100%));
+  		}
+			&.show {
+				@include transform(translateX(0));
+			}
+		}
+	}
+
+}
+
+.fade_view {
+	.main_container {
+		position: relative;
+		// overflow: hidden;
+		.main_comp {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			opacity: 0;
+			
+  		@include transition(opacity 0.5s cubic-bezier(0.465, 0.183, 0.153, 0.946));
+  		&.left {
+  			opacity: 0;
+  		}
+  		&.right {
+  			opacity: 0;
+  		}
+			&.show {
+				opacity: 1;
+			}
+		}
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

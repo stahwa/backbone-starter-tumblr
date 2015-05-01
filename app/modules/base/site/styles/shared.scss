@@ -1,0 +1,43 @@
+/* ===== MIXINS AND VARS ========= */
+
+$sans-serif-font: 'Helvetica', sans-serif;
+$font-color: #515151;
+
+
+@mixin vertical-align {
+	position: relative;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+
+@mixin borderBox {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+@mixin transition($vars...) {
+	-webkit-transition: $vars;
+		 -moz-transition: $vars;
+			-ms-transition: $vars;
+			 -o-transition: $vars;
+					transition: $vars;
+}
+
+@mixin transform($vars...) {
+	-webkit-transform: $vars;
+		 -moz-transform: $vars;
+			-ms-transform: $vars;
+			 -o-transform: $vars;
+					transform: $vars;
+}
+
+@mixin transitionTransform($vars...) {
+	-webkit-transition: -webkit-transform $vars;
+		 -moz-transition: -moz-transform $vars;
+			-ms-transition: -ms-transform $vars;
+			 -o-transition: -o-transform $vars;
+					transition: transform $vars;
+}
