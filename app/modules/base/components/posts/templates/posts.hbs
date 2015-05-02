@@ -1,10 +1,12 @@
 <div class="posts_component">
-	<ul>
+	<div class="posts_wrap">
 		{{#each collection}}
-			<li>
-				<img src="{{photos.0.alt_sizes.5.url}}">
-				<div class="cover_title">{{slug}}</div>
-			</li>
+			<div class="post_item">
+				<div class="post_inner_wrap">
+					<div class="post_img" style="background-image:url({{photos.0.alt_sizes.2.url}})"></div>
+					<div class="cover_title">{{slug}}</div>
+				</div>
+			</div>
 		{{/each}}
-	</ul>
+	</div>
 </div>

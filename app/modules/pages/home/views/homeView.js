@@ -3,6 +3,7 @@
 
 var BaseView = require('base/baseView');
 var CarouselView = require('modules/base/components/carousel/views/carouselView');
+var BarView = require('modules/base/components/bar/views/barView');
 var PostsView = require('modules/base/components/posts/views/postsView');
 var SiteCollection = require('modules/base/site/collections/siteCollection');
 
@@ -28,7 +29,8 @@ module.exports = BaseView.extend({
 
   buildPage: function() {
     var carouselView = new CarouselView({el: $('.carousel_container')});
-    // var postsView = new PostsView({el: $('.posts_container')});
+    var barView = new BarView({el: $('.bar_container')});
+    var postsView = new PostsView({el: $('.posts_container')});
   },
 
   render: function() {
