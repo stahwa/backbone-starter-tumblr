@@ -41,3 +41,11 @@ $font-color: #515151;
 			 -o-transition: -o-transform $vars;
 					transition: transform $vars;
 }
+
+@mixin transitionTransformOpac($vars...) {
+	-webkit-transition: -webkit-transform $vars, opacity $vars;
+		 -moz-transition: -moz-transform $vars, opacity $vars;
+			-ms-transition: -ms-transform $vars, opacity $vars;
+			 -o-transition: -o-transform $vars, opacity $vars;
+					transition: transform $vars, opacity $vars;
+}

@@ -28,7 +28,7 @@ module.exports = BaseView.extend({
 
   buildPage: function() {
     var carouselView = new CarouselView({el: $('.carousel_container')});
-    var postsView = new PostsView({el: $('.posts_container')});
+    // var postsView = new PostsView({el: $('.posts_container')});
   },
 
   render: function() {
@@ -41,7 +41,6 @@ module.exports = BaseView.extend({
 
   attachTo: function(arg) {
     BaseView.prototype.attachTo.apply(this, arguments);
-    // console.log('home attachTo', arg)
   },
 
   clickHandler: function() {

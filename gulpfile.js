@@ -32,8 +32,10 @@ gulp.task('html', function() {
     .pipe(gulp.dest(paths.dest))
 });
 
-gulp.task('sass', function() {
-  return gulp.src([paths.src + '**/site/styles/*.scss', paths.src + '**/styles/*.scss'])
+gulp.task('styles', function() {
+  return gulp.src([paths.src + '**/site/styles/*.scss',
+    'bower_components/swiper/dist/css/swiper.min.css',
+    paths.src + '**/styles/*.scss'])
     .pipe(sass())
     .pipe(concat('main.css'))
     .pipe(gulp.dest(paths.dest+'styles'));
@@ -55,6 +57,7 @@ gulp.task('browserify', function() {
 gulp.task('vendor', function() {
   stream = gulp.src([
   		paths.src + '../bower_components/jquery/dist/jquery.min.js',
+      paths.src + '../bower_components/swiper/dist/js/swiper.jquery.min.js',
   		paths.src + '../node_modules/backbone/node_modules/underscore/underscore-min.js',
       paths.src + '../node_modules/backbone/backbone-min.js'
 
@@ -86,9 +89,9 @@ gulp.task('watch', function(){
 
   gulp.watch(paths.src + '**/*.js', ['browserify']);
   gulp.watch(paths.src + '**/*.hbs', ['browserify']);
-  gulp.watch(paths.src + '**/styles/*.scss', ['sass']);
+  gulp.watch(paths.src + '**/styles/*.scss', ['styles']);
   gulp.watch(paths.src + 'index.html', ['html']);
 });
 
-gulp.task('compile', ['html', 'sass', 'browserify']);
+gulp.task('compile', ['html', 'styles', 'browserify']);
 gulp.task('default', ['vendor', 'compile', 'watch']);

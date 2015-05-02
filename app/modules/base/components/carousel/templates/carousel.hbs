@@ -1,10 +1,23 @@
 <div class="carousel_component">
-	<ul>
-		{{#each collection}}
-			<li>
-				<img src="{{photos.0.alt_sizes.5.url}}">
-				<div class="cover_title">{{slug}}</div>
-			</li>
-		{{/each}}
-	</ul>
+
+	<div class="swiper-container">
+		<div class="swiper-wrapper">
+
+			{{#each collection}}
+				<div class="swiper-slide">
+					<article>
+						<div class="article-content" style="background-image:url({{photos.0.alt_sizes.0.url}})">
+							<div class="caption">{{slug}}</div>
+						</div>
+					</article>
+				</div>
+			{{/each}}
+
+		</div>
+		<div class="swiper-pagination"></div>
+
+		<div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+
+	</div>
 </div>
