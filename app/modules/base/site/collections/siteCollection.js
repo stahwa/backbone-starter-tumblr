@@ -27,7 +27,7 @@ var SiteCollection = Backbone.Collection.extend({
 
   initialize: function(models, options) {
     // this.tag = options.tag;
-    console.log('sitecollection this.tag',options.tag)
+    // console.log('sitecollection this.tag',options.tag)
 
 
     this.fetch({
@@ -39,7 +39,7 @@ var SiteCollection = Backbone.Collection.extend({
   },
 
   fetchSuccess: function (collection, response, options) {
-  	console.log('API call success collection', collection, options);
+  	// console.log('API call success collection', collection, options);
     Backbone.pubSub.trigger(options.type+'_collectionRetrieved');
     // console.log('API call success response', response);
   },

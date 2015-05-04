@@ -3,7 +3,6 @@
 var BaseView = require('base/baseView');
 var NavState = require('util/navState');
 var TransEnd = require('util/transEnd');
-// var SiteModel = require('modules/base/site/models/siteModel');
 
 
 module.exports = BaseView.extend({

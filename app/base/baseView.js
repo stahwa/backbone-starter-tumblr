@@ -17,6 +17,9 @@ module.exports = Backbone.View.extend({
     	// console.log('has a model so will unbind')
     	this.model.unbind('change');
     };
+
+    delete this.$el;
+    delete this.el;
   }
 
 });

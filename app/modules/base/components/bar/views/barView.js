@@ -1,7 +1,9 @@
 'use strict';
 
+var BaseView = require('base/baseView');
 
-module.exports = Backbone.View.extend({
+
+module.exports = BaseView.extend({
 
   template: require('../templates/bar.hbs'),
 

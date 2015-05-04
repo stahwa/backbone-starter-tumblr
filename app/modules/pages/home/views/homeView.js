@@ -28,9 +28,9 @@ module.exports = BaseView.extend({
   },
 
   buildPage: function() {
-    var carouselView = new CarouselView({el: $('.carousel_container')});
-    var barView = new BarView({el: $('.bar_container')});
-    var postsView = new PostsView({el: $('.posts_container')});
+    this.carouselView = new CarouselView({el: $('.carousel_container')});
+    this.barView = new BarView({el: $('.bar_container')});
+    this.postsView = new PostsView({el: $('.posts_container')});
   },
 
   render: function() {
@@ -47,6 +47,15 @@ module.exports = BaseView.extend({
 
   clickHandler: function() {
     this.model.set({title: 'changed title'})
+  },
+
+  dispose: function(arg) {
+    // console.log('homedispose')
+    this.carouselView.dispose();
+    this.barView.dispose();
+    this.postsView.dispose();
+    BaseView.prototype.dispose.apply(this, arguments);
+    
   }
 
 });

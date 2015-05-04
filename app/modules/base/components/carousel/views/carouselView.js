@@ -1,9 +1,10 @@
 'use strict';
 
+var BaseView = require('base/baseView');
 var SiteCollection = require('modules/base/site/collections/siteCollection');
 
 
-module.exports = Backbone.View.extend({
+module.exports = BaseView.extend({
 
   template: require('../templates/carousel.hbs'),
 
@@ -19,7 +20,6 @@ module.exports = Backbone.View.extend({
   },
 
   initSwiper: function() {
-    console.log('initSwiper')
     var _this = this;
     this.mySwiper = new Swiper ('.swiper-container', {
       direction: 'horizontal',
@@ -32,7 +32,7 @@ module.exports = Backbone.View.extend({
       paginationClickable: true,
       createPagination: true,
       onInit: function() {
-        console.log('initted')
+        // console.log('initted')
       },
       onSlideChangeStart: function() {
         $('.tempViewable').removeClass('tempViewable');
