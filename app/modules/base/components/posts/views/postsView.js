@@ -9,6 +9,7 @@ module.exports = BaseView.extend({
 
   template: require('../templates/posts.hbs'),
 
+
   initialize: function() {
   	this.listenTo(Backbone.pubSub, 'posts_collectionRetrieved', this.createPostItem);
     this.$el.html( this.template );
@@ -20,6 +21,7 @@ module.exports = BaseView.extend({
 
   getImages: function() {
   	this.postsCollection = new SiteCollection([], {tag: 'featured', type: 'posts'});
+    // BB.collections.allPosts = this.postsCollection;
   },
 
   createPostItem: function() {

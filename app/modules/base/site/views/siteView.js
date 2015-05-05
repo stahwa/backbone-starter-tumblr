@@ -41,8 +41,9 @@ module.exports = BaseView.extend({
   },
 
   gotoView: function(view) {
-    $('#app').addClass('slide_view');
     // $('#app').addClass('fade_view');
+    $('#app').addClass('slide_view');
+    
     this.layout.slideView(view)
   },
 

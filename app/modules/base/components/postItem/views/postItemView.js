@@ -1,7 +1,6 @@
 'use strict';
 
 var BaseView = require('base/baseView');
-// var SiteCollection = require('modules/base/site/collections/siteCollection');
 
 
 module.exports = BaseView.extend({
@@ -9,10 +8,12 @@ module.exports = BaseView.extend({
   className: 'post_item_container',
   template: require('../templates/postItem.hbs'),
   events: {
-    'mouseenter': 'sizeCopyContainer'
+    'mouseenter': 'sizeCopyContainer',
+    'click': 'gotoPerma'
   },
 
   initialize: function() {
+    // console.log('this.model',this.model)
     this.$el.html(this.template( this.model.toJSON()));
   },
 
@@ -24,6 +25,16 @@ module.exports = BaseView.extend({
   render: function() {
   	// this.$el.html(this.template( this.model.toJSON()));
     return this;
+  },
+
+  gotoPerma: function() {
+    var currId = this.model.get('id');
+    // console.log('currId',currId)
+    // BB.site.set('currId', currId)
+    var url = document.domain;
+    var permaUrl = 'http://' + url+ '/#/post/' +currId+ '/' +this.model.get('slug');
+    console.log('gotoPerma',permaUrl);
+    window.location = permaUrl;
   }
 
 

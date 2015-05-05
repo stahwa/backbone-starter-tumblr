@@ -15,7 +15,6 @@ module.exports = BaseView.extend({
   events: {},
 
   initialize: function () {
-    
     this.attachTo('.main_container');
   },
 
