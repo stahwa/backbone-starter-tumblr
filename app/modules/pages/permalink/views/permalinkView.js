@@ -3,6 +3,7 @@
 
 var BaseView = require('base/baseView');
 var SiteCollection = require('modules/base/site/collections/siteCollection');
+var PermalinkContentView = require('modules/pages/permalink/views/permalinkContentView');
 
 
 module.exports = BaseView.extend({
@@ -16,8 +17,8 @@ module.exports = BaseView.extend({
   events: {},
 
   initialize: function () {
-    console.log('perma init')
-    this.listenTo(Backbone.pubSub, 'perma_collectionRetrieved', this.findPost);
+    this.listenTo(Backbone.pubSub, 'perma_collectionRetrieved', this.filterPosts);
+    this.listenTo(Backbone.pubSub, 'current_model_found', this.createPage);
     this.permaCollection = new SiteCollection([], {tag: 'featured', type: 'perma'});
     
     this.attachTo('.main_container');
@@ -30,25 +31,34 @@ module.exports = BaseView.extend({
     return this;
   },
 
-  findPost: function() {
+  filterPosts: function() {
+    this.findId();
+    console.log('this.permaCollection',this.permaCollection)
+    this.permaCollection.each(this.findPlaceinArr, this);
+  },
+
+  findId: function() {
     var url = window.location.href;
     var secondPart = url.split('/post/')[1];
     this.currId = secondPart.split('/')[0];
     console.log('this.currId',this.currId)
-    this.filterPosts();
-  },
-
-  filterPosts: function() {
-    console.log('this.permaCollection',this.permaCollection)
-    this.permaCollection.each(this.findPlaceinArr, this);
+    // this.filterPosts();
   },
 
   findPlaceinArr: function(mod) {
     console.log('filterPosts', mod.get('id'))
     if (this.currId == mod.get('id')) {
-      var placeInArr = this.permaCollection.indexOf(mod);
-      console.log('found it!!!!!',mod, placeInArr)
+      this.placeInArr = this.permaCollection.indexOf(mod);
+      
+      console.log('found it!!!!!',mod, this.placeInArr)
+      Backbone.pubSub.trigger('current_model_found');
     };
+  },
+
+  createPage: function() {
+    console.log('createPage', this.permaCollection.models[this.placeInArr])
+    var currModel = this.permaCollection.models[this.placeInArr];
+    var permalinkContentView = new PermalinkContentView({model: currModel});
   }
 
 
