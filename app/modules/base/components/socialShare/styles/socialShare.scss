@@ -1,0 +1,25 @@
+@import '../../../site/styles/shared';
+
+/* ===== SOCIAL SHARE ========= */
+
+.social_share_component,
+.social_tumblr_component {
+  margin-top: 16px;
+	ul {
+		overflow: hidden;
+		float: left;
+		li {
+			cursor: pointer;
+			float: left;
+		  padding: 5px 8px;
+			span {
+			  font-size: 20px;
+			}
+			&.hover {
+				span {
+					color: #fff;
+				}
+			}
+		}
+	}
+}

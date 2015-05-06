@@ -46,17 +46,17 @@ module.exports = BaseView.extend({
   },
 
   findPlaceinArr: function(mod) {
-    console.log('filterPosts', mod.get('id'))
+    // console.log('filterPosts', mod.get('id'))
     if (this.currId == mod.get('id')) {
       this.placeInArr = this.permaCollection.indexOf(mod);
       
-      console.log('found it!!!!!',mod, this.placeInArr)
+      // console.log('found it!!!!!',mod, this.placeInArr)
       Backbone.pubSub.trigger('current_model_found');
     };
   },
 
   createPage: function() {
-    console.log('createPage', this.permaCollection.models[this.placeInArr])
+    // console.log('createPage', this.permaCollection.models[this.placeInArr])
     var currModel = this.permaCollection.models[this.placeInArr];
     var permalinkContentView = new PermalinkContentView({model: currModel});
   }

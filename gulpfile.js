@@ -18,12 +18,17 @@ gulp.task('set-production', function() {
   environment = 'production';
 });
 
+//gulp.task('copyFonts', function () {
+//  return gulp.src(['./bower_components/fontawesome/css/*',
+//    './bower_components/fontawesome/fonts/*'], {
+//    base: 'bower_components'
+//  }).pipe(gulp.dest(paths.dest+paths.assets+'fonts'));
+//});
 
-
-// gulp.task('copy', function(){
-//   gulp.src([path.INDEX, path.ASSETS], {
-//     base: 'src'
-//   }).pipe(gulp.dest(path.DEST_BUILD));
+// gulp.task('copyFonts', function () {
+//  return gulp.src([paths.src+'assets/fonts/font-awesome/*'], {
+//    base: 'app/assets/fonts'
+//  }).pipe(gulp.dest(paths.dest+paths.assets+'fonts'));
 // });
 
 gulp.task('html', function() {
@@ -33,9 +38,11 @@ gulp.task('html', function() {
 });
 
 gulp.task('styles', function() {
-  return gulp.src([paths.src + '**/site/styles/*.scss',
-    'bower_components/swiper/dist/css/swiper.min.css',
+  return gulp.src(['bower_components/swiper/dist/css/swiper.min.css',
+    // 'bower_components/fontawesome/css/font-awesome.min.css',
+    paths.src + '**/site/styles/*.scss',
     paths.src + '**/styles/*.scss'])
+    .pipe(plumber())
     .pipe(sass())
     .pipe(concat('main.css'))
     .pipe(gulp.dest(paths.dest+'styles'));
