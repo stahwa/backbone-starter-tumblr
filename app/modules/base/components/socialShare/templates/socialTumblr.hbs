@@ -1,9 +1,15 @@
-<div class="like_button" data-post-id={{id}} id="like_button_{{id}}"><iframe id="like_iframe_{{id}}" src="http://assets.tumblr.com/assets/html/like_iframe.html?_v=1af0c0fbf0ad9b4dc38445698d099106#name={{blog_name}}&amp;post_id={{id}}&amp;color=black&amp;rk={{reblog_key}}" scrolling="no" width="20" height="20" frameborder="0" class="like_toggle" allowtransparency="true"></iframe></div>
+
 <ul>
-	<li class="social_tumblr_item">
-		<span class="fa fa-heart"></span>
-		
+	<li class="social_tumblr_item like_btn">
+		<div class="like_button" data-post-id={{id}} id="like_button_{{id}}">
+			<iframe id="like_iframe_{{id}}" src="http://assets.tumblr.com/assets/html/like_iframe.html?_v=1af0c0fbf0ad9b4dc38445698d099106#name={{blog_name}}&amp;post_id={{id}}&amp;color=black&amp;rk={{reblog_key}}" scrolling="no" width="20" height="20" frameborder="0" class="like_toggle" allowtransparency="true"></iframe>
+			<span class="fa fa-heart"></span>
+		</div>
 	</li>
 
-	<li class="social_tumblr_item"><span class="fa fa-retweet"></span></li>
+	<li class="social_tumblr_item reblog_btn">
+		<a href="http://www.tumblr.com/reblog/{{id}}/{{reblog_key}}" target="_blank" class="reblog_button">
+			<span class="fa fa-retweet"></span>
+		</a>
+	</li>
 </ul>

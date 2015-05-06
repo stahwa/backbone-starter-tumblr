@@ -9,9 +9,7 @@ module.exports = BaseView.extend({
   template: require('../templates/socialTumblr.hbs'),
   events: {
   	'mouseenter .social_tumblr_item': 'socialHover',
-  	'mouseleave .social_tumblr_item': 'socialUnHover',
-    'click .social_tumblr_item .like_button': 'getIdsForLike',
-    'click .social_tumblr_item .fa-heart': 'like'
+  	'mouseleave .social_tumblr_item': 'socialUnHover'
   },
 
   initialize: function() {
@@ -20,9 +18,8 @@ module.exports = BaseView.extend({
   },
 
   render: function() {
-  	// this.$el.html( this.template );
     console.log('tumblr this.model',this.model.toJSON())
-    this.getIdsForLike();
+    // this.getIdsForLike(); // REENABLE FOR LIKING --------------
     return this;
   },
 
@@ -32,10 +29,6 @@ module.exports = BaseView.extend({
 
   socialUnHover: function(e) {
   	$(e.currentTarget).removeClass('hover');
-  },
-
-  like: function() {
-    console.log('like clicked')
   },
 
   getIdsForLike: function() {

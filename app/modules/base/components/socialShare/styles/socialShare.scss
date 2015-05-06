@@ -2,8 +2,9 @@
 
 /* ===== SOCIAL SHARE ========= */
 
-.social_share_component,
-.social_tumblr_component {
+.social_tumblr_component,
+.social_share_component {
+	// overflow: hidden;
   margin-top: 16px;
 	ul {
 		overflow: hidden;
@@ -23,3 +24,46 @@
 		}
 	}
 }
+.social_tumblr_component {
+	.social_tumblr_item {
+		.like_button {
+			position: relative;
+			width: 20px;
+			height: 20px;
+			cursor: pointer;
+			iframe {
+			  opacity: 0;
+			  position: absolute;
+			  z-index: 10000;
+			}
+			span.fa {
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+			&.liked {
+				.fa-heart {
+					color: #e02d2d;
+				}
+			}
+		}
+		.reblog_button {
+			color: $font-color;
+		}
+	}
+}
+.social_share_component {
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
