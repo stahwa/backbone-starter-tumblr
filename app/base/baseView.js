@@ -5,8 +5,25 @@
 module.exports = Backbone.View.extend({
 
 
-	attachTo: function(elem) {
-    $(elem).append(this.$el)
+	attachTo: function(elem, that) {
+    // WTF mate?? ------
+    if (that) {
+      $(that).find(elem).append(this.$el)
+    } else {
+      $(elem).append(this.$el)
+    }
+    
+    this.render();
+  },
+
+  preAttachTo: function(elem, that) {
+    // WTF mate?? ------
+    if (that) {
+      $(that).find(elem).prepend(this.$el)
+    } else {
+      $(elem).prepend(this.$el)
+    }
+    
     this.render();
   },
 

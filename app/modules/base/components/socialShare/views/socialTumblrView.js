@@ -14,11 +14,11 @@ module.exports = BaseView.extend({
 
   initialize: function() {
     this.$el.html( this.template( this.model.toJSON() ));
-    // this.render();
+    this.render();
   },
 
   render: function() {
-    console.log('tumblr this.model',this.model.toJSON())
+    // console.log('tumblr this.model',this.model.toJSON())
     // this.getIdsForLike(); // REENABLE FOR LIKING --------------
     return this;
   },

@@ -14,11 +14,14 @@ module.exports = BaseView.extend({
     'data-page': 'permalink'
   },
   template: require('../templates/permalink.hbs'),
-  events: {},
+  events: {
+    'click .prev_btn': 'prevPost',
+    'click .next_btn': 'nextPost'
+  },
 
   initialize: function () {
     this.listenTo(Backbone.pubSub, 'perma_collectionRetrieved', this.filterPosts);
-    this.listenTo(Backbone.pubSub, 'current_model_found', this.createPage);
+    this.listenTo(Backbone.pubSub, 'posts_found', this.createPages);
     this.permaCollection = new SiteCollection([], {tag: 'featured', type: 'perma'});
     
     this.attachTo('.main_container');
@@ -31,37 +34,126 @@ module.exports = BaseView.extend({
     return this;
   },
 
+  prevPost: function() {
+    console.log('this.nextModel',this.nextModel)
+    $('.next').remove();
+    $('.current').removeClass('current').addClass('next');
+    $('.previous').addClass('current').removeClass('previous');
+
+    if (this.model.get('currPlaceInArr') == 0) {
+      this.model.set('currPlaceInArr', this.permaCollection.length-1);
+    } else {
+      this.model.set('currPlaceInArr', this.model.get('currPlaceInArr')-1);
+    }
+
+    this.setupPrevPost();
+  },
+
+  nextPost: function() {
+    $('.previous').remove();
+    $('.current').removeClass('current').addClass('previous');
+    $('.next').addClass('current').removeClass('next');
+
+    if (this.model.get('currPlaceInArr') == (this.permaCollection.length-1)) {
+      this.model.set('currPlaceInArr', 0);
+    } else {
+      this.model.set('currPlaceInArr', this.model.get('currPlaceInArr')+1);
+    }
+
+    this.setupNextPost();
+  },
+
+  setupPrevPost: function() {
+    if (this.model.get('currPlaceInArr') == 0) {
+      this.prevModel = this.permaCollection.last();
+    } else {
+      this.prevModel = this.permaCollection.at(this.model.get('currPlaceInArr')-1);
+    }
+
+    this.prevModel.set('position_order', 'previous')
+    var permalinkContentPrevView = new PermalinkContentView({model: this.prevModel});
+    permalinkContentPrevView.preAttachTo('.permalink_content');
+  },
+
+  setupNextPost: function() {
+    if (this.model.get('currPlaceInArr') == this.permaCollection.length-1) {
+      this.nextModel = this.permaCollection.at(0);
+    } else
+      this.nextModel = this.permaCollection.at(this.model.get('currPlaceInArr')+1)
+    
+    this.nextModel.set('position_order', 'next')
+    var permalinkContentNextView = new PermalinkContentView({model: this.nextModel});
+    permalinkContentNextView.attachTo('.permalink_content');
+  },
+
   filterPosts: function() {
     this.findId();
-    console.log('this.permaCollection',this.permaCollection)
     this.permaCollection.each(this.findPlaceinArr, this);
+    this.findAdjacentPosts();
   },
 
   findId: function() {
     var url = window.location.href;
     var secondPart = url.split('/post/')[1];
-    this.currId = secondPart.split('/')[0];
-    console.log('this.currId',this.currId)
-    // this.filterPosts();
+    this.model.set('currId', secondPart.split('/')[0]);
   },
 
   findPlaceinArr: function(mod) {
-    // console.log('filterPosts', mod.get('id'))
-    if (this.currId == mod.get('id')) {
-      this.placeInArr = this.permaCollection.indexOf(mod);
+    if (this.model.get('currId') == mod.get('id')) {
+      this.model.set('currPlaceInArr', this.permaCollection.indexOf(mod));
       
-      // console.log('found it!!!!!',mod, this.placeInArr)
-      Backbone.pubSub.trigger('current_model_found');
+      // console.log('found it!!!!!',mod, this.currPlaceInArr)
+      // Backbone.pubSub.trigger('current_model_found');
     };
+
   },
 
-  createPage: function() {
-    // console.log('createPage', this.permaCollection.models[this.placeInArr])
-    var currModel = this.permaCollection.models[this.placeInArr];
+  findAdjacentPosts: function() {
+    if (this.model.get('currPlaceInArr') == 0) {
+      this.prevModel = this.permaCollection.last();
+    } else {
+      this.prevModel = this.permaCollection.at(this.model.get('currPlaceInArr')-1);
+    }
+    this.prevModel.set('position_order', 'previous')
+
+    if (this.model.get('currPlaceInArr') == (this.permaCollection.length-1)) {
+      this.nextModel = this.permaCollection.first();
+    } else {
+      this.nextModel = this.permaCollection.at(this.model.get('currPlaceInArr')+1);
+    }
+    this.nextModel.set('position_order', 'next')
+
+    Backbone.pubSub.trigger('posts_found');
+  },
+
+  createPages: function() {
+    console.log('createPages')
+
+    var currModel = this.permaCollection.at(this.model.get('currPlaceInArr'));
+    currModel.set('position_order', 'current')
+
+    var permalinkContentPrevView = new PermalinkContentView({model: this.prevModel});
+    permalinkContentPrevView.attachTo('.permalink_content');
+
     var permalinkContentView = new PermalinkContentView({model: currModel});
+    permalinkContentView.attachTo('.permalink_content');
+
+    var permalinkContentNextView = new PermalinkContentView({model: this.nextModel});
+    permalinkContentNextView.attachTo('.permalink_content');
   }
 
 
 
 });
+
+
+
+
+
+
+
+
+
+
+
 

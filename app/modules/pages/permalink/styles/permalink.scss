@@ -1,15 +1,60 @@
+@import '../../../base/site/styles/shared';
+
+/* ===== PERMALINK ========= */
+
+
 .permalink_container {
 	background-color: #dacbcb;
   // padding-bottom: 200px;
+  .permalink_nav {
+  	width: 100%;
+  	margin: 0 auto;
+  	position: absolute;
+  	top: 20%;
+	  z-index: 1000;
+  	.perma_btn {
+  		background-color: #fff;
+  		width: 40px;
+  		height: 40px;
+  		cursor: pointer;
+  	}
+  	.prev_btn {
+  		float: left;
+		  margin-left: 50px;
+  	}
+  	.next_btn {
+  		float: right;
+		  margin-right: 50px;
+  	}
+  }
 	.permalink_content {
-
-	}
-	.perma_wrap {
-		width: 50%;
-		max-width: 1100px;
-		margin: 0 auto;
-		img {
+		position: relative;
+		.perma_post {
+			background-color: #efefef;
+			position: absolute;
+			top: 0;
+			left: 0;
 			width: 100%;
+			@include transitionTransform(0.5s cubic-bezier(0.465, 0.183, 0.153, 0.946));
+			&.previous {
+				@include transform(translateX(-100%));
+			}
+			&.current {
+				@include transform(translateX(0));
+				z-index: 100;
+			}
+			&.next {
+				@include transform(translateX(100%));
+			}
+		}
+		.perma_wrap {
+			width: 50%;
+			max-width: 1100px;
+			margin: 0 auto;
+			img {
+				width: 100%;
+			}
 		}
 	}
+	
 }
