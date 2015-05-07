@@ -29,12 +29,12 @@ module.exports = BaseView.extend({
 
   gotoPerma: function() {
     var currId = this.model.get('id');
-    // console.log('currId',currId)
-    // BB.site.set('currId', currId)
     var url = document.domain;
-    var permaUrl = 'http://' + url+ '/#/post/' +currId+ '/' +this.model.get('slug');
+    var permaUrl = '/#/post/' +currId+ '/' +this.model.get('slug');
     console.log('gotoPerma',permaUrl);
     window.location = permaUrl;
+
+    // Backbone.history.navigate(permaUrl, true);
   }
 
 

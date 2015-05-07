@@ -47,6 +47,8 @@ module.exports = BaseView.extend({
     }
 
     this.setupPrevPost();
+    var permalinkContentPrevView = new PermalinkContentView({model: this.prevModel});
+    permalinkContentPrevView.preAttachTo('.permalink_content');
   },
 
   nextPost: function() {
@@ -61,6 +63,8 @@ module.exports = BaseView.extend({
     }
 
     this.setupNextPost();
+    var permalinkContentNextView = new PermalinkContentView({model: this.nextModel});
+    permalinkContentNextView.attachTo('.permalink_content');
   },
 
   setupPrevPost: function() {
@@ -71,28 +75,26 @@ module.exports = BaseView.extend({
     }
 
     this.prevModel.set('position_order', 'previous')
-    var permalinkContentPrevView = new PermalinkContentView({model: this.prevModel});
-    permalinkContentPrevView.preAttachTo('.permalink_content');
   },
 
   setupNextPost: function() {
     if (this.model.get('currPlaceInArr') == this.permaCollection.length-1) {
-      this.nextModel = this.permaCollection.at(0);
+      this.nextModel = this.permaCollection.first();
     } else
       this.nextModel = this.permaCollection.at(this.model.get('currPlaceInArr')+1)
     
     this.nextModel.set('position_order', 'next')
-    var permalinkContentNextView = new PermalinkContentView({model: this.nextModel});
-    permalinkContentNextView.attachTo('.permalink_content');
   },
 
   filterPosts: function() {
-    this.findId();
+    this.grabIdFromURL();
     this.permaCollection.each(this.findPlaceinArr, this);
-    this.findAdjacentPosts();
+    this.setupPrevPost();
+    this.setupNextPost();
+    Backbone.pubSub.trigger('posts_found');
   },
 
-  findId: function() {
+  grabIdFromURL: function() {
     var url = window.location.href;
     var secondPart = url.split('/post/')[1];
     this.model.set('currId', secondPart.split('/')[0]);
@@ -102,28 +104,9 @@ module.exports = BaseView.extend({
     if (this.model.get('currId') == mod.get('id')) {
       this.model.set('currPlaceInArr', this.permaCollection.indexOf(mod));
       
-      // console.log('found it!!!!!',mod, this.currPlaceInArr)
       // Backbone.pubSub.trigger('current_model_found');
     };
 
-  },
-
-  findAdjacentPosts: function() {
-    if (this.model.get('currPlaceInArr') == 0) {
-      this.prevModel = this.permaCollection.last();
-    } else {
-      this.prevModel = this.permaCollection.at(this.model.get('currPlaceInArr')-1);
-    }
-    this.prevModel.set('position_order', 'previous')
-
-    if (this.model.get('currPlaceInArr') == (this.permaCollection.length-1)) {
-      this.nextModel = this.permaCollection.first();
-    } else {
-      this.nextModel = this.permaCollection.at(this.model.get('currPlaceInArr')+1);
-    }
-    this.nextModel.set('position_order', 'next')
-
-    Backbone.pubSub.trigger('posts_found');
   },
 
   createPages: function() {
