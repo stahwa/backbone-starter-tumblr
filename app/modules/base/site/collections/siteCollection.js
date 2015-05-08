@@ -39,9 +39,9 @@ var SiteCollection = Backbone.Collection.extend({
   },
 
   fetchSuccess: function (collection, response, options) {
+    BB.collections[options.type] = collection;
   	// console.log('API call success collection', collection, options);
     Backbone.pubSub.trigger(options.type+'_collectionRetrieved');
-    // console.log('API call success response', response);
   },
 
   fetchError: function (collection, response) {

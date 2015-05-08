@@ -24,8 +24,6 @@ module.exports = Backbone.Router.extend({
   },
 
   initialize: function() {
-    // var siteModel = new SiteModel();
-    // this.siteView = new SiteView({el: $('#app')});
     this.siteView = new SiteView({el: $('#app')});
   },
 
@@ -33,25 +31,40 @@ module.exports = Backbone.Router.extend({
     var homeModel = new HomeModel();
     var homeView = new HomeView({model: homeModel});
     this.siteView.gotoView(homeView);
+    BB.currPage = 'index';
   },
 
   about: function() {
     var aboutModel = new AboutModel();
     var aboutView = new AboutView({model: aboutModel});
     this.siteView.gotoView(aboutView);
+    BB.currPage = 'about';
   },
 
   more: function() {
     var moreModel = new MoreModel();
     var moreView = new MoreView({model: moreModel});
     this.siteView.gotoView(moreView);
+    BB.currPage = 'more';
   },
 
   permalink: function() {
     console.log('permalink router')
-    var permalinkModel = new PermalinkModel();
-    var permalinkView = new PermalinkView({model: permalinkModel});
-    this.siteView.gotoView(permalinkView);
+    if (BB.currPage != 'permalink') {
+      var permalinkModel = new PermalinkModel();
+      this.permalinkView = new PermalinkView({model: permalinkModel});
+      this.siteView.gotoView(this.permalinkView);
+      BB.currPage = 'permalink';
+      // console.log('permalinkView1',this.permalinkView)
+    } else {
+      // console.log('permalinkView2',this.permalinkView)
+      console.log('browser button')
+
+      this.permalinkView.navigateHist();
+      // console.log('back history', Backbone.history)
+
+    }
+    
   }
 
 

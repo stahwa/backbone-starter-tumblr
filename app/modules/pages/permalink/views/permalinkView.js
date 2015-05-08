@@ -42,6 +42,7 @@ module.exports = BaseView.extend({
     var permalinkContentPrevView = new PermalinkContentView({model: this.prevModel});
     permalinkContentPrevView.preAttachTo('.permalink_content');
 
+    this.garbageCollect('previous', permalinkContentPrevView);
     this.setHistory();
   },
 
@@ -53,6 +54,7 @@ module.exports = BaseView.extend({
     var permalinkContentNextView = new PermalinkContentView({model: this.nextModel});
     permalinkContentNextView.attachTo('.permalink_content');
 
+    this.garbageCollect('next', permalinkContentNextView);
     this.setHistory();
   },
 
@@ -107,6 +109,7 @@ module.exports = BaseView.extend({
   },
 
   filterPosts: function() {
+
     this.grabIdFromURL();
     this.permaCollection.each(this.findPlaceinArr, this);
     this.setupPrevPost();
@@ -130,8 +133,6 @@ module.exports = BaseView.extend({
   },
 
   createPages: function() {
-    console.log('createPages')
-
     var currModel = this.permaCollection.at(this.model.get('currPlaceInArr'));
     currModel.set('position_order', 'current')
 
@@ -143,6 +144,37 @@ module.exports = BaseView.extend({
 
     var permalinkContentNextView = new PermalinkContentView({model: this.nextModel});
     permalinkContentNextView.attachTo('.permalink_content');
+
+    this.model.get('views').push(permalinkContentPrevView)
+    this.model.get('views').push(permalinkContentView)
+    this.model.get('views').push(permalinkContentNextView)
+    console.log('perma this.model', this.model)
+  },
+
+  garbageCollect: function(direction, viewToAdd) {
+    var viewArr = this.model.get('views');
+
+    if (direction == 'previous') {
+      // Add new view to the beginning of array
+      viewArr.unshift(viewToAdd);
+
+      // Dispose of the last view in the array
+      var lastView = viewArr[viewArr.length-1];
+      lastView.dispose();
+      viewArr.pop();
+
+    } else if (direction == 'next') {
+      // Add new view to the end of array
+      viewArr.push(viewToAdd);
+
+      // Dispose of the first view in the array
+      var firstView = viewArr[0];
+      firstView.dispose();
+      viewArr.shift();
+
+    };
+
+    console.log('garbage collected model',this.model)
   },
 
   setHistory: function() {
@@ -151,13 +183,32 @@ module.exports = BaseView.extend({
     var id = currMod.get('id');
     var slug = currMod.get('slug');
     var permaUrl = '#!/post/' + id + '/' + slug
-    console.log('currMod',currMod )
-    console.log('permaUrl',permaUrl)
 
     Backbone.history.navigate(permaUrl, {trigger: false});
-    // window.history.pushState(slug, id, permaUrl);
+  },
 
+  navigateHist: function() {
+    // When using browser buttons ----------------
+    // Dispose and empty all views at once -------
+    this.clearAllViews();
 
+    this.filterPosts();
+  },
+
+  clearAllViews: function() {
+    var viewArr = this.model.get('views');
+    console.log('clearAllViews', viewArr)
+    for (var i = 0; i < viewArr.length; i++) {
+      viewArr[i].dispose();
+      viewArr.length = 0;
+    };
+  },
+
+  dispose: function(arg) {
+    console.log('permalink dispose')
+    this.clearAllViews();
+    BaseView.prototype.dispose.apply(this, arguments);
+    
   }
 
 
