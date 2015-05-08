@@ -35,36 +35,56 @@ module.exports = BaseView.extend({
   },
 
   prevPost: function() {
-    console.log('this.nextModel',this.nextModel)
-    $('.next').remove();
-    $('.current').removeClass('current').addClass('next');
-    $('.previous').addClass('current').removeClass('previous');
-
-    if (this.model.get('currPlaceInArr') == 0) {
-      this.model.set('currPlaceInArr', this.permaCollection.length-1);
-    } else {
-      this.model.set('currPlaceInArr', this.model.get('currPlaceInArr')-1);
-    }
-
+    this.manageClasses('previous');
+    this.setCurrPlace('previous');
     this.setupPrevPost();
+
     var permalinkContentPrevView = new PermalinkContentView({model: this.prevModel});
     permalinkContentPrevView.preAttachTo('.permalink_content');
+
+    this.setHistory();
   },
 
   nextPost: function() {
-    $('.previous').remove();
-    $('.current').removeClass('current').addClass('previous');
-    $('.next').addClass('current').removeClass('next');
-
-    if (this.model.get('currPlaceInArr') == (this.permaCollection.length-1)) {
-      this.model.set('currPlaceInArr', 0);
-    } else {
-      this.model.set('currPlaceInArr', this.model.get('currPlaceInArr')+1);
-    }
-
+    this.manageClasses('next');
+    this.setCurrPlace('next');
     this.setupNextPost();
+
     var permalinkContentNextView = new PermalinkContentView({model: this.nextModel});
     permalinkContentNextView.attachTo('.permalink_content');
+
+    this.setHistory();
+  },
+
+  manageClasses: function(direction) {
+    if (direction == 'previous') {
+      $('.next').remove();
+      $('.current').removeClass('current').addClass('next');
+      $('.previous').addClass('current').removeClass('previous');
+
+    } else if (direction == 'next') {
+      $('.previous').remove();
+      $('.current').removeClass('current').addClass('previous');
+      $('.next').addClass('current').removeClass('next');
+    };
+  },
+
+  setCurrPlace: function(direction) {
+    if (direction == 'previous') {
+      if (this.model.get('currPlaceInArr') == 0) {
+        this.model.set('currPlaceInArr', this.permaCollection.length-1);
+      } else {
+        this.model.set('currPlaceInArr', this.model.get('currPlaceInArr')-1);
+      }
+
+    } else if (direction == 'next') {
+      if (this.model.get('currPlaceInArr') == (this.permaCollection.length-1)) {
+        this.model.set('currPlaceInArr', 0);
+      } else {
+        this.model.set('currPlaceInArr', this.model.get('currPlaceInArr')+1);
+      }
+    };
+
   },
 
   setupPrevPost: function() {
@@ -96,7 +116,7 @@ module.exports = BaseView.extend({
 
   grabIdFromURL: function() {
     var url = window.location.href;
-    var secondPart = url.split('/post/')[1];
+    var secondPart = url.split('#post/')[1];
     this.model.set('currId', secondPart.split('/')[0]);
   },
 
@@ -123,6 +143,21 @@ module.exports = BaseView.extend({
 
     var permalinkContentNextView = new PermalinkContentView({model: this.nextModel});
     permalinkContentNextView.attachTo('.permalink_content');
+  },
+
+  setHistory: function() {
+    var currMod = this.permaCollection.at(this.model.get('currPlaceInArr'));
+    var url = document.domain;
+    var id = currMod.get('id');
+    var slug = currMod.get('slug');
+    var permaUrl = 'post/' + id + '/' + slug
+    console.log('currMod',currMod )
+    console.log('permaUrl',permaUrl)
+
+    Backbone.history.navigate(permaUrl, {trigger: false});
+    // window.history.pushState(slug, id, permaUrl);
+
+
   }
 
 

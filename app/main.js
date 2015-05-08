@@ -9,9 +9,13 @@ BB = {
   collections: {},
   views: {},
   routers: router,
+  currPage: '',
   init: function() {
   	this.site = new SiteModel();
-    Backbone.history.start();
+    Backbone.history.start({
+    	// pushState: true,
+    	// root: '/'
+    });
   }
 };
 

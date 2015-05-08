@@ -17,7 +17,7 @@ module.exports = BaseView.extend({
 
   initialize: function () {
     // this.permaCollection = new SiteCollection([], {tag: 'featured', type: 'perma'});
-    console.log('this.model',this.model)
+    // console.log('this.model',this.model)
     // this.attachTo('.permalink_content');
     
   },

@@ -18,7 +18,9 @@ module.exports = Backbone.Router.extend({
     '': 'index',
     'about': 'about',
     'more': 'more',
-    'post/:id/:slug': 'permalink'
+    'post/:id/:slug': 'permalink',
+
+    ":else": "index"
   },
 
   initialize: function() {
@@ -46,6 +48,7 @@ module.exports = Backbone.Router.extend({
   },
 
   permalink: function() {
+    console.log('permalink router')
     var permalinkModel = new PermalinkModel();
     var permalinkView = new PermalinkView({model: permalinkModel});
     this.siteView.gotoView(permalinkView);
