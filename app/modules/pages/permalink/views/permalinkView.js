@@ -116,7 +116,7 @@ module.exports = BaseView.extend({
 
   grabIdFromURL: function() {
     var url = window.location.href;
-    var secondPart = url.split('#post/')[1];
+    var secondPart = url.split('#!/post/')[1];
     this.model.set('currId', secondPart.split('/')[0]);
   },
 
@@ -150,7 +150,7 @@ module.exports = BaseView.extend({
     var url = document.domain;
     var id = currMod.get('id');
     var slug = currMod.get('slug');
-    var permaUrl = 'post/' + id + '/' + slug
+    var permaUrl = '#!/post/' + id + '/' + slug
     console.log('currMod',currMod )
     console.log('permaUrl',permaUrl)
 

@@ -15,10 +15,10 @@ var PermalinkModel = require('modules/pages/permalink/models/permalinkModel');
 
 module.exports = Backbone.Router.extend({
   routes: {
-    '': 'index',
-    'about': 'about',
-    'more': 'more',
-    'post/:id/:slug': 'permalink',
+    '!/': 'index',
+    '!/about': 'about',
+    '!/more': 'more',
+    '!/post/:id/:slug': 'permalink',
 
     ":else": "index"
   },

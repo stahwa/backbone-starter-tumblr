@@ -30,7 +30,7 @@ module.exports = BaseView.extend({
   gotoPerma: function() {
     var currId = this.model.get('id');
     var url = document.domain;
-    var permaUrl = '#post/' +currId+ '/' +this.model.get('slug');
+    var permaUrl = '#!/post/' +currId+ '/' +this.model.get('slug');
     console.log('gotoPerma',permaUrl);
     window.location = permaUrl;
 
