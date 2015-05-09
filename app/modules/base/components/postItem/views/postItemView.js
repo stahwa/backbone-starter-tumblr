@@ -31,7 +31,6 @@ module.exports = BaseView.extend({
     var currId = this.model.get('id');
     var url = document.domain;
     var permaUrl = '#!/post/' +currId+ '/' +this.model.get('slug');
-    console.log('gotoPerma',permaUrl);
     window.location = permaUrl;
 
     // Backbone.history.navigate(permaUrl, true);

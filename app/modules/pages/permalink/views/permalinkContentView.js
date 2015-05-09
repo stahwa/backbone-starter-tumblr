@@ -13,13 +13,20 @@ module.exports = BaseView.extend({
     return 'perma_post ' + this.model.get('position_order')
   },
   template: require('../templates/permalinkContent.hbs'),
-  events: {},
+  events: {
+    'click .cover_copy': 'zoom'
+  },
 
   initialize: function () {
     // this.permaCollection = new SiteCollection([], {tag: 'featured', type: 'perma'});
     // console.log('this.model',this.model)
     // this.attachTo('.permalink_content');
     
+  },
+
+  zoom: function() {
+    console.log('zoom')
+    $('.cover_copy').addClass('zoom')
   },
 
   render: function () {

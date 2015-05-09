@@ -148,7 +148,6 @@ module.exports = BaseView.extend({
     this.model.get('views').push(permalinkContentPrevView)
     this.model.get('views').push(permalinkContentView)
     this.model.get('views').push(permalinkContentNextView)
-    console.log('perma this.model', this.model)
   },
 
   garbageCollect: function(direction, viewToAdd) {
@@ -174,7 +173,6 @@ module.exports = BaseView.extend({
 
     };
 
-    console.log('garbage collected model',this.model)
   },
 
   setHistory: function() {
@@ -188,16 +186,14 @@ module.exports = BaseView.extend({
   },
 
   navigateHist: function() {
-    // When using browser buttons ----------------
-    // Dispose and empty all views at once -------
     this.clearAllViews();
-
     this.filterPosts();
   },
 
   clearAllViews: function() {
+    // When using browser buttons ----------------
+    // Dispose and empty all views at once -------
     var viewArr = this.model.get('views');
-    console.log('clearAllViews', viewArr)
     for (var i = 0; i < viewArr.length; i++) {
       viewArr[i].dispose();
       viewArr.length = 0;
@@ -205,7 +201,6 @@ module.exports = BaseView.extend({
   },
 
   dispose: function(arg) {
-    console.log('permalink dispose')
     this.clearAllViews();
     BaseView.prototype.dispose.apply(this, arguments);
     

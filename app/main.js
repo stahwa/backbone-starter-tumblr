@@ -11,7 +11,9 @@ BB = {
   routers: router,
   currPage: '',
   init: function() {
-  	this.site = new SiteModel();
+  	this.site = new SiteModel({
+		  isTransitioning: false
+		});
     Backbone.history.start({
     	// pushState: true,
     	// root: '/'
