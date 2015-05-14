@@ -9,9 +9,9 @@ var lastAnimation = 0,
 var pageScroll = {
 
   init: function(sections, currentSection) {
-    sectionArr = sections
+    sectionArr = sections;
     this.setUp(sections);
-    this.setPage(currentSection)
+    this.setPage(currentSection);
 
   },
 
@@ -55,7 +55,7 @@ var pageScroll = {
   },
 
   moveNext: function() {
-    var index = $(sectionArr +".active").data("index");
+    var index = $(sectionArr + ".active").data("index");
     var current = $(sectionArr + "[data-index='" + index + "']");
     var next = $(sectionArr + "[data-index='" + (index + 1) + "']");
 

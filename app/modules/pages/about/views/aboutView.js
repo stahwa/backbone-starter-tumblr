@@ -44,10 +44,8 @@ module.exports = BaseView.extend({
     var secondPart = url.split('#!/' + page + '/')[1];
     if (secondPart) {
       this.model.set('currSection', secondPart);
-      console.log('this.model',this.model)
     } else {
       this.model.set('currSection', 'section1');
-      console.log('this.model',this.model)
     }
   },
 
@@ -58,9 +56,8 @@ module.exports = BaseView.extend({
   },
 
   navigateHist: function() {
-    console.log('navigateHist')
-    // this.clearAllViews();
-    // this.filterPosts();
+    this.checkForSection();
+    PageScroll.setPage(this.model.get('currSection'));
   },
 
   dispose: function(arg) {

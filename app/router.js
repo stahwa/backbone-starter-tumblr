@@ -38,15 +38,13 @@ module.exports = Backbone.Router.extend({
   },
 
   about: function() {
-    console.log('about route')
     if (BB.site.get('isTransitioning')==false) {
       if (BB.currPage != 'about') {
-        console.log('reload')
         BB.currPage = 'about';
         var aboutModel = new AboutModel();
         this.aboutView = new AboutView({model: aboutModel});
         this.siteView.gotoView(this.aboutView);
-        
+
       } else {
         this.aboutView.navigateHist();
       }
