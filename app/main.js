@@ -18,8 +18,15 @@ BB = {
     	// pushState: true,
     	// root: '/'
     });
-  }
+  },
+  is_touch: false
 };
+
+if (('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)) {
+  BB.is_touch = true;
+  $('body').addClass('is-touch')
+}
+  
 
 // create pub-sub functionality
 Backbone.pubSub = _.extend({}, Backbone.Events);

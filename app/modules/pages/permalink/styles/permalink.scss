@@ -5,6 +5,7 @@
 
 .permalink_container {
 	background-color: #dacbcb;
+	overflow: hidden;
   // padding-bottom: 200px;
   .permalink_nav {
   	width: 100%;
@@ -55,13 +56,7 @@
 				width: 100%;
 			}
 		}
-		.cover_copy {
-			
-			@include transitionTransform(0.5s cubic-bezier(0.465, 0.183, 0.153, 0.946));
-			&.zoom {
-				@include transform(scale(400));
-			}
-		}
+
 	}
 	
 }

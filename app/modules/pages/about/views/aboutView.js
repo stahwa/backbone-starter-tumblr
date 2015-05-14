@@ -1,7 +1,10 @@
-
 'use strict';
 
 var BaseView = require('base/baseView');
+var PageScroll = require('util/pageScroll');
+var AboutSection1 = require('modules/pages/about/views/aboutSection1');
+var AboutSection2 = require('modules/pages/about/views/aboutSection2');
+var AboutSection3 = require('modules/pages/about/views/aboutSection3');
 
 
 module.exports = BaseView.extend({
@@ -16,14 +19,54 @@ module.exports = BaseView.extend({
 
   initialize: function () {
     this.attachTo('.main_container');
+    this.checkForSection();
+    this.buildPage();
+    this.bindEvents();
+
+    PageScroll.init('.about_section', this.model.get('currSection'));
+  },
+
+  bindEvents: function() {
+    this.$el.on('mousewheel DOMMouseScroll MozMousePixelScroll', function(e) {
+      PageScroll.init_scroll(e);
+    });
+
   },
 
   render: function () {
     this.$el.html(this.template( this.model.toJSON()));
-    // console.log('about view render')
-    // Backbone.pubSub.trigger('viewRendered', 'helloooo payload');
-
     return this;
+  },
+
+  checkForSection: function() {
+    var url = window.location.href;
+    var page = BB.currPage;
+    var secondPart = url.split('#!/' + page + '/')[1];
+    if (secondPart) {
+      this.model.set('currSection', secondPart);
+      console.log('this.model',this.model)
+    } else {
+      this.model.set('currSection', 'section1');
+      console.log('this.model',this.model)
+    }
+  },
+
+  buildPage: function() {
+    var aboutSection1 = new AboutSection1({model: this.model});
+    var aboutSection2 = new AboutSection2({model: this.model});
+    var aboutSection3 = new AboutSection3({model: this.model});
+  },
+
+  navigateHist: function() {
+    console.log('navigateHist')
+    // this.clearAllViews();
+    // this.filterPosts();
+  },
+
+  dispose: function(arg) {
+    this.$el.off('mousewheel DOMMouseScroll MozMousePixelScroll');
+    BaseView.prototype.dispose.apply(this, arguments);
+    
   }
   
 });

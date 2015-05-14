@@ -30,7 +30,7 @@ module.exports = BaseView.extend({
 
     this.$el.html( this.template );
     var headerView = new HeaderView({el: $('.header_container')});
-    var footerView = new FooterView({el: $('.footer_container')});
+    // var footerView = new FooterView({el: $('.footer_container')});
     this.layout = new LayoutController();
   },
 
@@ -52,7 +52,7 @@ module.exports = BaseView.extend({
     var mainCompH = $('.main_comp').height();
     var app = $('#app');
 
-    app.height(wh-100)
+    app.height(wh-50)
     
 
   

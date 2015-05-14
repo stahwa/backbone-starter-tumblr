@@ -66,10 +66,13 @@ body {
 }
 #app {
 	height: 100%;
+	padding-top: 1px;
+	margin-top: -1px;
 }
 
 .main_container {
 	height: 100%;
+	margin-top: 50px;
 }
 
 .main_comp {

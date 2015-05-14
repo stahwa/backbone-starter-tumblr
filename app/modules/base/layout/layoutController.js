@@ -55,7 +55,7 @@ module.exports = BaseView.extend({
 
     animEl.one(transitionEvent, function(event) {
       // console.log('transition END')
-      Backbone.pubSub.trigger('animEnd', 'eeeeeennnnndddd');
+      Backbone.pubSub.trigger('animEnd');
     });
 
     setTimeout(function(){
