@@ -2,6 +2,7 @@
 
 var BaseView = require('base/baseView');
 var PageScroll = require('util/pageScroll');
+var SwipeEvents = require('util/SwipeEvents');
 var AboutSection1 = require('modules/pages/about/views/aboutSection1');
 var AboutSection2 = require('modules/pages/about/views/aboutSection2');
 var AboutSection3 = require('modules/pages/about/views/aboutSection3');
@@ -31,6 +32,8 @@ module.exports = BaseView.extend({
       PageScroll.init_scroll(e);
     });
 
+    this.$el.swipeEvents().on('swipeUp',  function(){ PageScroll.moveNext(); })
+      .on('swipeDown',  function(){ PageScroll.movePrev(); });
   },
 
   render: function () {
@@ -50,9 +53,9 @@ module.exports = BaseView.extend({
   },
 
   buildPage: function() {
-    var aboutSection1 = new AboutSection1({model: this.model});
-    var aboutSection2 = new AboutSection2({model: this.model});
-    var aboutSection3 = new AboutSection3({model: this.model});
+    this.aboutSection1 = new AboutSection1({model: this.model});
+    this.aboutSection2 = new AboutSection2({model: this.model});
+    this.aboutSection3 = new AboutSection3({model: this.model});
   },
 
   navigateHist: function() {
@@ -61,7 +64,16 @@ module.exports = BaseView.extend({
   },
 
   dispose: function(arg) {
-    this.$el.off('mousewheel DOMMouseScroll MozMousePixelScroll');
+    console.log('about dispose')
+    
+    // this.$el.off('mousewheel DOMMouseScroll MozMousePixelScroll');
+    // this.$el.swipeEvents().off('swipeUp')
+    //   .off('swipeDown');
+
+    this.aboutSection1.dispose();
+    this.aboutSection2.dispose();
+    this.aboutSection3.dispose();
+
     BaseView.prototype.dispose.apply(this, arguments);
     
   }

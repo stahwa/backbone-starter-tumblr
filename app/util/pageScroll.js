@@ -32,6 +32,7 @@ var pageScroll = {
     var indx = sec.substr(sec.length - 1);
     var pos = ((indx-1) * 100) * -1;
 
+    $(sectionArr).removeClass('active')
     $('.about_sec'+indx).addClass('active')
     this.transformPage(pos, indx);
   },
@@ -55,6 +56,7 @@ var pageScroll = {
   },
 
   moveNext: function() {
+    console.log('moveNext')
     var index = $(sectionArr + ".active").data("index");
     var current = $(sectionArr + "[data-index='" + index + "']");
     var next = $(sectionArr + "[data-index='" + (index + 1) + "']");
@@ -72,6 +74,7 @@ var pageScroll = {
   },
 
   movePrev: function() {
+    console.log('movePrev')
     var index = $(sectionArr +".active").data("index");
     var current = $(sectionArr + "[data-index='" + index + "']");
     var next = $(sectionArr + "[data-index='" + (index - 1) + "']");
@@ -89,7 +92,6 @@ var pageScroll = {
   },
 
   transformPage: function( pos, index) {
-
     $(sectionArr).parent().css({
       '-webkit-transform': 'translate3d(0, ' + pos + '%, 0)',
       '-moz-transform': 'translate3d(0, ' + pos + '%, 0)',
@@ -99,12 +101,11 @@ var pageScroll = {
   },
 
   setHistory: function() {
-
     var page = BB.currPage;
     var pageSectionUrl = '#!/' + page + '/section' + $('.active').data('index');
 
     Backbone.history.navigate(pageSectionUrl, {trigger: false});
-  },
+  }
 
     
 

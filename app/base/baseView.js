@@ -30,10 +30,11 @@ module.exports = Backbone.View.extend({
   dispose: function() {
     this.remove();
     this.unbind();
+    this.off();
     
     if (this.model) {
-    	// console.log('has a model so will unbind')
     	this.model.unbind('change');
+      this.model.off( null, null, this );
     };
 
     delete this.$el;
