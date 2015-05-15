@@ -34,6 +34,13 @@ module.exports = BaseView.extend({
     window.location = permaUrl;
 
     // Backbone.history.navigate(permaUrl, true);
+  },
+
+  dispose: function(arg) {
+    console.log('postItem dispose')
+
+    BaseView.prototype.dispose.apply(this, arguments);
+    
   }
 
 

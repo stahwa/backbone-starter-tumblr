@@ -28,9 +28,9 @@ module.exports = Backbone.View.extend({
   },
 
   dispose: function() {
-    this.remove();
     this.unbind();
     this.off();
+    this.remove();
     
     if (this.model) {
     	this.model.unbind('change');

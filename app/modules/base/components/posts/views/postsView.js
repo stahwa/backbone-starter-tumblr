@@ -8,32 +8,42 @@ var PostItemView = require('modules/base/components/postItem/views/postItemView'
 module.exports = BaseView.extend({
 
   template: require('../templates/posts.hbs'),
+  events: {
+    'click .load_more_btn': 'loadMorePosts'
+  },
 
 
   initialize: function() {
   	this.listenTo(Backbone.pubSub, 'posts_collectionRetrieved', this.createPostItem);
     this.$el.html( this.template );
     this.render();
-
     this.getImages();
-    
   },
 
   getImages: function() {
   	this.postsCollection = new SiteCollection([], {tag: 'featured', type: 'posts'});
-    // BB.collections.allPosts = this.postsCollection;
+    this.postsArr = [];
   },
 
-  createPostItem: function() {
-    this.postsArr = [];
-    this.postsCollection.each(this.addPostItem, this);
+  createPostItem: function(offsetAmt) {
+    console.log('createPostItem offsetAmt',offsetAmt)
+    console.log('this.postsCollection',this.postsCollection)
+    
+    // this.postsCollection.each(this.addPostItem, this);
+
+    var models = this.postsCollection.models;
+    var arrToIterate = models.slice(offsetAmt);
+
+    for (var i = 0; i < arrToIterate.length; i++) {
+      this.addPostItem(models[offsetAmt+i])
+    };
   },
 
   addPostItem: function(mod) {
     var postItemView = new PostItemView({ model: mod });
     postItemView.attachTo('.posts_wrap');
     this.postsArr.push(postItemView);
-    // $('.posts_wrap').append(postItemView.render().el)
+    // console.log('this.postsArr', this.postsArr)
   },
 
   render: function() {
@@ -41,7 +51,12 @@ module.exports = BaseView.extend({
     return this;
   },
 
+  loadMorePosts: function() {
+    this.postsCollection.getMorePosts();
+  },
+
   dispose: function(arg) {
+    console.log('postsView dispose')
     for (var post in this.postsArr) {
       this.postsArr[post].dispose();
     }

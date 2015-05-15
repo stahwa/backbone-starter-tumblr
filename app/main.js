@@ -6,7 +6,9 @@ var SiteModel = require('modules/base/site/models/siteModel');
 BB = window.BB || {};
 BB = {
   models: {},
-  collections: {},
+  collections: {
+    _info: {}
+  },
   views: {},
   routers: router,
   currPage: '',

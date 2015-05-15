@@ -50,7 +50,7 @@ module.exports = BaseView.extend({
   },
 
   dispose: function(arg) {
-    // console.log('homedispose')
+    console.log('home dispose')
     this.carouselView.dispose();
     this.barView.dispose();
     this.postsView.dispose();
