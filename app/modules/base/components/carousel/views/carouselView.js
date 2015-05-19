@@ -9,14 +9,14 @@ module.exports = BaseView.extend({
   template: require('../templates/carousel.hbs'),
 
   initialize: function() {
-  	this.listenTo(Backbone.pubSub, 'carousel_collectionRetrieved', this.render);
+  	this.listenTo(Backbone.pubSub, 'carousel_fullCollectionRetrieved', this.render);
     // this.$el.html( this.template );
     this.getPosts();
     // this.render();
   },
 
   getPosts: function() {
-  	this.coverCollection = new SiteCollection([], {tag: 'cover', type: 'carousel'});
+  	this.coverCollection = new SiteCollection([], {tag: 'cover', type: 'carousel', limit: 10});
   },
 
   initSwiper: function() {
@@ -64,6 +64,12 @@ module.exports = BaseView.extend({
     this.initSwiper();
     this.manageClass();
     return this;
+  },
+
+  dispose: function(arg) {
+    
+    BaseView.prototype.dispose.apply(this, arguments);
+    
   }
 
 

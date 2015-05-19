@@ -1,7 +1,7 @@
 
 var Router = require('./router');
-var router = new Router();
 var SiteModel = require('modules/base/site/models/siteModel');
+
 
 BB = window.BB || {};
 BB = {
@@ -23,6 +23,8 @@ BB = {
   },
   is_touch: false
 };
+
+var router = new Router();
 
 if (('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)) {
   BB.is_touch = true;

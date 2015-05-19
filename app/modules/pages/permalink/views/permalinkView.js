@@ -20,9 +20,9 @@ module.exports = BaseView.extend({
   },
 
   initialize: function () {
-    this.listenTo(Backbone.pubSub, 'perma_collectionRetrieved', this.filterPosts);
+    this.listenTo(Backbone.pubSub, 'perma_fullCollectionRetrieved', this.filterPosts);
     this.listenTo(Backbone.pubSub, 'posts_found', this.createPages);
-    this.permaCollection = new SiteCollection([], {tag: 'featured', type: 'perma'});
+    // this.permaCollection = new SiteCollection([], {tag: 'featured', type: 'perma', offset: 0});
     
     this.attachTo('.main_container');
   },
@@ -30,8 +30,15 @@ module.exports = BaseView.extend({
   render: function () {
     // console.log('render permalink')
     this.$el.html( this.template( this.model.toJSON()) );
-
+    if (BB.collections.posts) {
+      this.filterPosts();
+    }
+    
     return this;
+  },
+
+  loadRemainder: function() {
+    BB.collections.posts.loadRemainder([], {tag: 'featured', type: this.POST_TYPE, offset: BB.collections._info.posts.currPostAmt});
   },
 
   prevPost: function() {
@@ -74,13 +81,13 @@ module.exports = BaseView.extend({
   setCurrPlace: function(direction) {
     if (direction == 'previous') {
       if (this.model.get('currPlaceInArr') == 0) {
-        this.model.set('currPlaceInArr', this.permaCollection.length-1);
+        this.model.set('currPlaceInArr', BB.collections.posts.models.length-1);
       } else {
         this.model.set('currPlaceInArr', this.model.get('currPlaceInArr')-1);
       }
 
     } else if (direction == 'next') {
-      if (this.model.get('currPlaceInArr') == (this.permaCollection.length-1)) {
+      if (this.model.get('currPlaceInArr') == (BB.collections.posts.models.length-1)) {
         this.model.set('currPlaceInArr', 0);
       } else {
         this.model.set('currPlaceInArr', this.model.get('currPlaceInArr')+1);
@@ -91,27 +98,33 @@ module.exports = BaseView.extend({
 
   setupPrevPost: function() {
     if (this.model.get('currPlaceInArr') == 0) {
-      this.prevModel = this.permaCollection.last();
+      this.prevModel = BB.collections.posts.last();
     } else {
-      this.prevModel = this.permaCollection.at(this.model.get('currPlaceInArr')-1);
+      this.prevModel = BB.collections.posts.at(this.model.get('currPlaceInArr')-1);
     }
 
     this.prevModel.set('position_order', 'previous')
   },
 
   setupNextPost: function() {
-    if (this.model.get('currPlaceInArr') == this.permaCollection.length-1) {
-      this.nextModel = this.permaCollection.first();
+    if (this.model.get('currPlaceInArr') == BB.collections.posts.models.length-1) {
+      this.nextModel = BB.collections.posts.models[0];
     } else
-      this.nextModel = this.permaCollection.at(this.model.get('currPlaceInArr')+1)
+      this.nextModel = BB.collections.posts.at(this.model.get('currPlaceInArr')+1)
     
     this.nextModel.set('position_order', 'next')
   },
 
   filterPosts: function() {
-
+    console.log('filterposts')
     this.grabIdFromURL();
-    this.permaCollection.each(this.findPlaceinArr, this);
+    // this.permaCollection.each(this.findPlaceinArr, this);
+    
+    console.log('BB.collections.posts.models',BB)
+    for (var i = 0; i < BB.collections.posts.models.length; i++) {
+      this.findPlaceinArr(BB.collections.posts.models[i])
+    };
+
     this.setupPrevPost();
     this.setupNextPost();
     Backbone.pubSub.trigger('posts_found');
@@ -125,7 +138,7 @@ module.exports = BaseView.extend({
 
   findPlaceinArr: function(mod) {
     if (this.model.get('currId') == mod.get('id')) {
-      this.model.set('currPlaceInArr', this.permaCollection.indexOf(mod));
+      this.model.set('currPlaceInArr', BB.collections.posts.models.indexOf(mod));
       
       // Backbone.pubSub.trigger('current_model_found');
     };
@@ -133,7 +146,7 @@ module.exports = BaseView.extend({
   },
 
   createPages: function() {
-    var currModel = this.permaCollection.at(this.model.get('currPlaceInArr'));
+    var currModel = BB.collections.posts.at(this.model.get('currPlaceInArr'));
     currModel.set('position_order', 'current')
 
     var permalinkContentPrevView = new PermalinkContentView({model: this.prevModel});
@@ -176,7 +189,7 @@ module.exports = BaseView.extend({
   },
 
   setHistory: function() {
-    var currMod = this.permaCollection.at(this.model.get('currPlaceInArr'));
+    var currMod = BB.collections.posts.at(this.model.get('currPlaceInArr'));
     var url = document.domain;
     var id = currMod.get('id');
     var slug = currMod.get('slug');

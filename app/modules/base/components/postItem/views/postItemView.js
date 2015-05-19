@@ -37,8 +37,8 @@ module.exports = BaseView.extend({
   },
 
   dispose: function(arg) {
-    console.log('postItem dispose')
-
+    // console.log('postItem dispose')
+    
     BaseView.prototype.dispose.apply(this, arguments);
     
   }

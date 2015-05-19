@@ -19,7 +19,7 @@ module.exports = BaseView.extend({
   },
 
   initialize: function() {
-
+    console.log('home init')
     // this.listenTo(Backbone.pubSub, 'collectionDone', this.render);
     this.listenTo(this.model, 'change', this.render);
     this.attachTo('.main_container');
@@ -50,7 +50,7 @@ module.exports = BaseView.extend({
   },
 
   dispose: function(arg) {
-    console.log('home dispose')
+    // console.log('home dispose')
     this.carouselView.dispose();
     this.barView.dispose();
     this.postsView.dispose();

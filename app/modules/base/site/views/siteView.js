@@ -4,6 +4,7 @@ var BaseView = require('base/baseView');
 var HeaderView = require('modules/base/header/views/headerView');
 var FooterView = require('modules/base/footer/views/footerView');
 var LayoutController = require('modules/base/layout/layoutController');
+var SiteCollection = require('modules/base/site/collections/siteCollection');
 
 
 module.exports = BaseView.extend({
@@ -14,28 +15,19 @@ module.exports = BaseView.extend({
   initialize: function() {
     var _this = this;
 
-    // siteCollection.fetch({
-    //   data: $.param({ tag: 'animals'}),
-    //   'success': function (collection, response) {
-    //     console.log('API success', collection);
-    //     console.log('API success', response);
-    //   },
-    //   'error': function (collection, response) {
-    //     console.log('API error')
-    //   }
-    // });
-
     setTimeout(function(){ _this.resizeMain(); }, 100);
     $(window).on("resize", this.resizeMain);
 
     this.$el.html( this.template );
     var headerView = new HeaderView({el: $('.header_container')});
     // var footerView = new FooterView({el: $('.footer_container')});
+    var postsCollection = new SiteCollection([], {tag: 'featured', type: 'posts', limit: 20});
+
     this.layout = new LayoutController();
+
   },
 
   render: function() {
-    console.log('API success',this.collection)
     // this.$el.html(this.template({ posts: this.collection.toJSON() }));
     
   },
@@ -54,8 +46,6 @@ module.exports = BaseView.extend({
 
     app.height(wh-50)
     
-
-  
   }
 
 

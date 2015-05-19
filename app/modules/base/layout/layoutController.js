@@ -72,6 +72,12 @@ module.exports = BaseView.extend({
     // console.log('isTransitioning',BB.site.get('isTransitioning'))
     BB.site.get('oldView').dispose();
 
+  },
+
+  dispose: function(arg) {
+
+    BaseView.prototype.dispose.apply(this, arguments);
+    
   }
 
 
