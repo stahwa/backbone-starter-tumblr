@@ -116,11 +116,9 @@ module.exports = BaseView.extend({
   },
 
   filterPosts: function() {
-    console.log('filterposts')
     this.grabIdFromURL();
     // this.permaCollection.each(this.findPlaceinArr, this);
     
-    console.log('BB.collections.posts.models',BB)
     for (var i = 0; i < BB.collections.posts.models.length; i++) {
       this.findPlaceinArr(BB.collections.posts.models[i])
     };

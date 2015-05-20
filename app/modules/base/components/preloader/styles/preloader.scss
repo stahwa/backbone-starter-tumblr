@@ -1,0 +1,54 @@
+@import '../../../site/styles/shared';
+
+/* ===== BAR ========= */
+
+@-webkit-keyframes rotate { 100% { -webkit-transform: rotate(360deg); } }
+@-moz-keyframes rotate { 100% { -moz-transform: rotate(360deg); } }
+@-o-keyframes rotate { 100% { -o-transform: rotate(360deg); } }
+@keyframes rotate { 100% { transform: rotate(360deg); } }
+
+.preloader_container {
+  .preloader_component {
+    background-color: #fff;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 100000;
+    opacity: 1;
+    visibility: visible;
+    @include transition(opacity 2s, visibility 0s 2s);
+    .preloader_circle{
+      border: 2px solid grey;
+      border-radius: 100%;
+      border-bottom-color: transparent;
+      
+      height: 25px;
+      width: 25px;
+      background: transparent;
+      display: inline-block;
+
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto auto;
+      text-align: center;
+      
+      -webkit-animation: rotate 0.75s 0s linear infinite;
+      -moz-animation: rotate 0.75s 0s linear infinite;
+      -o-animation: rotate 0.75s 0s linear infinite;
+      animation: rotate 0.75s 0s linear infinite; 
+      
+    }
+    &.hide {
+      opacity: 0;
+      visibility: hidden;
+      .preloader_circle {
+
+      }
+
+    }
+  }
+  
+}

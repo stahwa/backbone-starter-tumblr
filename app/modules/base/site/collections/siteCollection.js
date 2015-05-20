@@ -72,7 +72,10 @@ var SiteCollection = Backbone.Collection.extend({
       // console.log('totalPosts', totalPosts)
 
       if (currLoadedPostAmt == limit) {
-        Backbone.pubSub.trigger(options.type+'_prelimCollectionRetrieved', this.offset);
+        if (BB.currPage == 'index') {
+          Backbone.pubSub.trigger(options.type+'_prelimCollectionRetrieved', this.offset);
+          Backbone.pubSub.trigger('remove_preloader', BB.currPage);
+        }
       };
 
       this.fetchPosts([], {tag: BB.collections._info[options.type].tag, type: BB.collections._info[options.type].type, limit: BB.collections._info[options.type].limit, offset: currLoadedPostAmt})
@@ -85,10 +88,12 @@ var SiteCollection = Backbone.Collection.extend({
     if (currLoadedPostAmt == totalPosts) {
       if (BB.collections._info[options.type].type == 'carousel') {
         Backbone.pubSub.trigger(options.type+'_fullCollectionRetrieved', this.offset);
-      };
+      }
       if (BB.currPage == 'permalink') {
         Backbone.pubSub.trigger('perma_fullCollectionRetrieved', this.offset);
+        Backbone.pubSub.trigger('remove_preloader', BB.currPage);
       };
+      // Backbone.pubSub.trigger('fullCollectionRetrieved', BB.currPage);
     }
 
   },

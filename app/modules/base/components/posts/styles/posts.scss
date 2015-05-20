@@ -11,12 +11,16 @@
 		overflow: hidden;
 	}
 	.load_more_btn {
-		background: #bfbfbf;
+		background-color: #bfbfbf;
 		text-align: center;
   	line-height: 2.8;
 		width: 100px;
 		height: 40px;
 	  margin: 50px auto 0;
 	  cursor: pointer;
+	  @include transition(background-color .2s);
+	  &:hover {
+	  	background-color: #a6a6a6;
+	  }
 	}
 }

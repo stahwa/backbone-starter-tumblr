@@ -3,10 +3,14 @@
 var BaseView = require('base/baseView');
 var NavState = require('util/navState');
 var TransEnd = require('util/transEnd');
+// var PreloaderView = require('modules/base/components/preloader/views/preloaderView');
 
 
 module.exports = BaseView.extend({
 
+  initialize: function() {
+    
+  },
 
   showView: function(view) {
     $('#app').addClass('show_view');
@@ -22,6 +26,9 @@ module.exports = BaseView.extend({
 
 
   slideView: function(view) {
+    // var preloaderView = new PreloaderView();
+    
+
     // console.log('BB.site',BB.site)
     if (BB.site.get('currentPage')) {
       BB.site.set({'newPage': view.model.get('page')});

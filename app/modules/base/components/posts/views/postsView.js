@@ -37,10 +37,7 @@ module.exports = BaseView.extend({
   },
 
   createInitialPosts: function() {
-
     var offset = BB.collections._info.posts.offset;
-    // console.log('createInitialPosts offset',offset)
-
     var models = BB.collections.posts.models;
     var arrToIterate = models.slice(0, this.OFFSET_AMT);
 
@@ -52,29 +49,16 @@ module.exports = BaseView.extend({
 
     this.checkForMore();
 
-    // If there are more posts to load then load them into collection
-    // if (BB.collections._info.posts.allPostsLoaded == false) {
-    //   console.log('allPostsLoaded is false')
-    //   if (BB.collections._info[this.POST_TYPE].currPostAmt != BB.collections._info[this.POST_TYPE].total_posts) {
-    //     console.log('createInitialPosts STILL MORE TO LOAD', BB.collections._info[this.POST_TYPE].type)
-    //     this.loadRemainder();
-    //   } 
-      
-    // };
-
   },
 
   addPostItem: function(mod) {
     var postItemView = new PostItemView({ model: mod });
     postItemView.attachTo('.posts_wrap');
     this.postsArr.push(postItemView);
-    // console.log('added')
   },
 
   checkForMore: function() {
     var posts = BB.collections._info[this.POST_TYPE];
-    // console.log('check',posts.currPostAmt)
-    // console.log('check', posts.totalPosts)
     if (posts.currPostAmt == posts.totalPosts) {
       $('.load_more_btn').css('visibility', 'hidden');
     };
@@ -85,18 +69,7 @@ module.exports = BaseView.extend({
     return this;
   },
 
-  // loadMorePosts: function() {
-  //   BB.collections.posts.getMorePosts([], {tag: 'featured', type: this.POST_TYPE, offset: this.OFFSET_AMT, limit: this.OFFSET_AMT});
-  // },
-
-  // loadRemainder: function() {
-  //   console.log('loadRemainder BB',BB)
-  //   BB.collections.posts.loadRemainder([], {tag: 'featured', type: this.POST_TYPE, offset: BB.collections._info.posts.currPostAmt});
-  // },
-
   showMorePosts: function() {
-    // console.log('post collection',BB.collections._info[this.POST_TYPE].currPostAmt)
-
     var models = BB.collections[this.POST_TYPE].models;
     var currPostAmt = BB.collections._info[this.POST_TYPE].currPostAmt;
     var offset = currPostAmt + this.OFFSET_AMT;
@@ -113,8 +86,6 @@ module.exports = BaseView.extend({
       $('.load_more_btn').css('visibility', 'hidden');
     }
     
-
-    // this.checkForMore();
   },
 
   dispose: function(arg) {

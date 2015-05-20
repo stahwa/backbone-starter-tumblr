@@ -12,6 +12,15 @@ $font-color: #515151;
 	transform: translateY(-50%);
 }
 
+@mixin centerOnPage {
+	position: relative;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
 @mixin borderBox {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
