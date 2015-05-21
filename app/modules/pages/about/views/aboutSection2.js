@@ -7,12 +7,12 @@ var BaseView = require('base/baseView');
 module.exports = BaseView.extend({
 
   tagName: 'div',
-  className: 'about_section about_sec2',
+  className: 'about_section sec2',
   template: require('../templates/aboutSection2.hbs'),
   events: {},
 
   initialize: function () {
-    this.attachTo('.section_wrap');
+    this.attachTo('.about_container .section_wrap');
   },
 
   render: function () {

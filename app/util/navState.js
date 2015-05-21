@@ -3,7 +3,7 @@
 var navState = {
 	getSlideDir: function(oldPage, newPage) {
 		
-		var pages = ['home', 'about', 'more'];
+		var pages = ['home', 'about', 'more', 'scroll'];
 		var oldIndex = pages.indexOf(oldPage);
 		var newIndex = pages.indexOf(newPage);
 

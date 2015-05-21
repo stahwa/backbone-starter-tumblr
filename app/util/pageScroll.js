@@ -33,7 +33,7 @@ var pageScroll = {
     var pos = ((indx-1) * 100) * -1;
 
     $(sectionArr).removeClass('active')
-    $('.about_sec'+indx).addClass('active')
+    $('.sec'+indx).addClass('active')
     this.transformPage(pos, indx);
   },
 
@@ -56,7 +56,6 @@ var pageScroll = {
   },
 
   moveNext: function() {
-    console.log('moveNext')
     var index = $(sectionArr + ".active").data("index");
     var current = $(sectionArr + "[data-index='" + index + "']");
     var next = $(sectionArr + "[data-index='" + (index + 1) + "']");
@@ -74,7 +73,6 @@ var pageScroll = {
   },
 
   movePrev: function() {
-    console.log('movePrev')
     var index = $(sectionArr +".active").data("index");
     var current = $(sectionArr + "[data-index='" + index + "']");
     var next = $(sectionArr + "[data-index='" + (index - 1) + "']");

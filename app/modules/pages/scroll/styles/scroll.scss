@@ -1,8 +1,8 @@
 @import '../../../base/site/styles/shared';
 
-/* ===== ABOUT ========= */
+/* ===== SCROLL ========= */
 
-.about_container {
+.scroll_container {
 	background-color: #cccfdb;
 	height: 100%;
 	overflow: hidden;
@@ -14,7 +14,7 @@
 		// @include transitionTransform(0.5s cubic-bezier(0.465, 0.183, 0.153, 0.946));
 		@include transition( all 0.5s cubic-bezier(0.465, 0.183, 0.153, 0.946));
 	}
-	.about_section {
+	.scroll_section {
 	  width: 100%;
 	  height: 100%;
 	  // position: absolute;

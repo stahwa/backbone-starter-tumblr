@@ -7,12 +7,12 @@ var BaseView = require('base/baseView');
 module.exports = BaseView.extend({
 
   tagName: 'div',
-  className: 'about_section sec3',
-  template: require('../templates/aboutSection3.hbs'),
+  className: 'scroll_section sec3',
+  template: require('../templates/scrollSection3.hbs'),
   events: {},
 
   initialize: function () {
-    this.attachTo('.about_container .section_wrap');
+    this.attachTo('.scroll_container .section_wrap');
   },
 
   render: function () {

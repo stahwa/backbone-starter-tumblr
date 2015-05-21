@@ -3,12 +3,14 @@
 var SiteView = require('modules/base/site/views/siteView');
 var HomeView = require('modules/pages/home/views/homeView');
 var AboutView = require('modules/pages/about/views/aboutView');
+var ScrollView = require('modules/pages/scroll/views/scrollView');
 var MoreView = require('modules/pages/more/views/moreView');
 var PermalinkView = require('modules/pages/permalink/views/permalinkView');
 
 // var SiteModel = require('modules/base/site/models/siteModel');
 var HomeModel = require('modules/pages/home/models/homeModel');
 var AboutModel = require('modules/pages/about/models/aboutModel');
+var ScrollModel = require('modules/pages/scroll/models/scrollModel');
 var MoreModel = require('modules/pages/more/models/moreModel');
 var PermalinkModel = require('modules/pages/permalink/models/permalinkModel');
 
@@ -19,6 +21,8 @@ module.exports = Backbone.Router.extend({
     '!/': 'index',
     '!/about': 'about',
     '!/about/:section': 'about',
+    '!/scroll': 'scroll',
+    '!/scroll/:section': 'scroll',
     '!/more': 'more',
     '!/post/:id/:slug': 'permalink',
 
@@ -48,6 +52,20 @@ module.exports = Backbone.Router.extend({
 
       } else {
         this.aboutView.navigateHist();
+      }
+    };
+  },
+
+  scroll: function() {
+    if (BB.site.get('isTransitioning')==false) {
+      if (BB.currPage != 'scroll') {
+        BB.currPage = 'scroll';
+        var scrollModel = new ScrollModel();
+        this.scrollView = new ScrollView({model: scrollModel});
+        this.siteView.gotoView(this.scrollView);
+
+      } else {
+        this.scrollView.navigateHist();
       }
     };
   },

@@ -39,6 +39,12 @@ module.exports = Backbone.View.extend({
       this.model.off( null, null, this );
     };
 
+    if (this.collection) {
+      console.log('has a collection',this.collection)
+
+      // this.collection = null;
+    };
+
     delete this.$el;
     delete this.el;
   }

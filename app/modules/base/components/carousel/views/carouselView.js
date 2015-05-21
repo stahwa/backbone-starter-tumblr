@@ -67,7 +67,12 @@ module.exports = BaseView.extend({
   },
 
   dispose: function(arg) {
-    
+    for (var i = this.coverCollection.models.length - 1; i >= 0; i--) {
+      this.coverCollection.models[i].unbind('change')
+      this.coverCollection.models[i] = null;
+    };
+    this.coverCollection = null;
+    this.mySwiper = null;
     BaseView.prototype.dispose.apply(this, arguments);
     
   }

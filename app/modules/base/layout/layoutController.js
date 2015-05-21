@@ -28,7 +28,6 @@ module.exports = BaseView.extend({
   slideView: function(view) {
     // var preloaderView = new PreloaderView();
     
-
     // console.log('BB.site',BB.site)
     if (BB.site.get('currentPage')) {
       BB.site.set({'newPage': view.model.get('page')});
@@ -77,6 +76,7 @@ module.exports = BaseView.extend({
   animEnd: function(payload) {
     BB.site.set('isTransitioning', false);
     // console.log('isTransitioning',BB.site.get('isTransitioning'))
+    // console.log('oldview',BB.site.get('oldView'))
     BB.site.get('oldView').dispose();
 
   },
