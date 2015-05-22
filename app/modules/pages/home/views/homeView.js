@@ -19,7 +19,6 @@ module.exports = BaseView.extend({
   },
 
   initialize: function() {
-    console.log('home init')
     // this.listenTo(Backbone.pubSub, 'collectionDone', this.render);
     this.listenTo(this.model, 'change', this.render);
     this.attachTo('.main_container');
@@ -34,7 +33,6 @@ module.exports = BaseView.extend({
   },
 
   render: function() {
-    console.log('home render')
     // this.$el.html( this.template({collection: this.coverCollection.toJSON()}) );
     this.$el.html( this.template() );
 

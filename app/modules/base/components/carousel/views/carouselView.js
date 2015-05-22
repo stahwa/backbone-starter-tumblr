@@ -13,28 +13,23 @@ module.exports = BaseView.extend({
     // this.render();
 
   	this.listenTo(Backbone.pubSub, 'carousel_fullCollectionRetrieved', this.createPosts);
-    
-    // this.getPosts();
 
     if (BB.collections.carousel) {
-      console.log('yes carousel exist BBcollection', BB.collections._info.carousel)
-      // BB.collections._info.carousel.offset = 0;
       this.createPosts();
     }
     
   },
 
-  getPosts: function() {
-  	// this.coverCollection = new SiteCollection([], {tag: 'cover', type: 'carousel', limit: 10});
-  },
-
   createPosts: function() {
+    var _this = this;
     var carouselCollection = BB.collections.carousel;
     this.$el.html(this.template( {collection: carouselCollection.toJSON()} ));
 
-    this.initSwiper();
-    this.manageClass();
-    // this.render();
+    setTimeout(function(){
+      _this.initSwiper();
+      _this.manageClass();
+    }, 0);
+    
   },
 
   initSwiper: function() {
@@ -50,7 +45,7 @@ module.exports = BaseView.extend({
       paginationClickable: true,
       createPagination: true,
       onInit: function() {
-        // console.log('initted')
+        // console.log('swiper initted')
       },
       onSlideChangeStart: function() {
         $('.tempViewable').removeClass('tempViewable');
@@ -91,7 +86,7 @@ module.exports = BaseView.extend({
     //   this.coverCollection.models[i] = null;
     // };
     // this.coverCollection = null;
-    // this.mySwiper = null;
+    this.mySwiper = null;
     BaseView.prototype.dispose.apply(this, arguments);
     
   }

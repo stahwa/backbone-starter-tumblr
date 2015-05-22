@@ -21,7 +21,7 @@ module.exports = BaseView.extend({
 
     // MOVED THE TEMPLATE AND RENDER UP HERE....TEST IT
     this.$el.html( this.template );
-    this.render();
+    // this.render();
 
     this.postsArr = [];
 
@@ -52,6 +52,7 @@ module.exports = BaseView.extend({
   },
 
   addPostItem: function(mod) {
+    console.log('addPostItem')
     var postItemView = new PostItemView({ model: mod });
     postItemView.attachTo('.posts_wrap');
     this.postsArr.push(postItemView);
