@@ -21,6 +21,7 @@ module.exports = BaseView.extend({
     this.$el.html( this.template );
     var headerView = new HeaderView({el: $('.header_container')});
     // var footerView = new FooterView({el: $('.footer_container')});
+    var coverCollection = new SiteCollection([], {tag: 'cover', type: 'carousel', limit: 10});
     var postsCollection = new SiteCollection([], {tag: 'featured', type: 'posts', limit: 20});
 
     this.layout = new LayoutController();

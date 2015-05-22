@@ -1,7 +1,7 @@
 'use strict';
 
 var BaseView = require('base/baseView');
-var SiteCollection = require('modules/base/site/collections/siteCollection');
+// var SiteCollection = require('modules/base/site/collections/siteCollection');
 
 
 module.exports = BaseView.extend({
@@ -9,14 +9,32 @@ module.exports = BaseView.extend({
   template: require('../templates/carousel.hbs'),
 
   initialize: function() {
-  	this.listenTo(Backbone.pubSub, 'carousel_fullCollectionRetrieved', this.render);
     // this.$el.html( this.template );
-    this.getPosts();
     // this.render();
+
+  	this.listenTo(Backbone.pubSub, 'carousel_fullCollectionRetrieved', this.createPosts);
+    
+    // this.getPosts();
+
+    if (BB.collections.carousel) {
+      console.log('yes carousel exist BBcollection', BB.collections._info.carousel)
+      // BB.collections._info.carousel.offset = 0;
+      this.createPosts();
+    }
+    
   },
 
   getPosts: function() {
-  	this.coverCollection = new SiteCollection([], {tag: 'cover', type: 'carousel', limit: 10});
+  	// this.coverCollection = new SiteCollection([], {tag: 'cover', type: 'carousel', limit: 10});
+  },
+
+  createPosts: function() {
+    var carouselCollection = BB.collections.carousel;
+    this.$el.html(this.template( {collection: carouselCollection.toJSON()} ));
+
+    this.initSwiper();
+    this.manageClass();
+    // this.render();
   },
 
   initSwiper: function() {
@@ -60,19 +78,20 @@ module.exports = BaseView.extend({
   },
 
   render: function() {
-  	this.$el.html( this.template({collection: this.coverCollection.toJSON()}) );
-    this.initSwiper();
-    this.manageClass();
+    console.log('carousel render')
+  	// this.$el.html( this.template() );
+    // this.initSwiper();
+    // this.manageClass();
     return this;
   },
 
   dispose: function(arg) {
-    for (var i = this.coverCollection.models.length - 1; i >= 0; i--) {
-      this.coverCollection.models[i].unbind('change')
-      this.coverCollection.models[i] = null;
-    };
-    this.coverCollection = null;
-    this.mySwiper = null;
+    // for (var i = this.coverCollection.models.length - 1; i >= 0; i--) {
+    //   this.coverCollection.models[i].unbind('change')
+    //   this.coverCollection.models[i] = null;
+    // };
+    // this.coverCollection = null;
+    // this.mySwiper = null;
     BaseView.prototype.dispose.apply(this, arguments);
     
   }

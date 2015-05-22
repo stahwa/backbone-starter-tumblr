@@ -1,7 +1,7 @@
 'use strict';
 
 var BaseView = require('base/baseView');
-var SiteCollection = require('modules/base/site/collections/siteCollection');
+// var SiteCollection = require('modules/base/site/collections/siteCollection');
 var PostItemView = require('modules/base/components/postItem/views/postItemView');
 
 

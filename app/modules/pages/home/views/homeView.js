@@ -34,6 +34,7 @@ module.exports = BaseView.extend({
   },
 
   render: function() {
+    console.log('home render')
     // this.$el.html( this.template({collection: this.coverCollection.toJSON()}) );
     this.$el.html( this.template() );
 
