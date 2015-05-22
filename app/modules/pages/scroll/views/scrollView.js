@@ -1,7 +1,7 @@
 'use strict';
 
 var BaseView = require('base/baseView');
-var PageScroll = require('util/pageScroll');
+var PageScrollChunks = require('util/pageScrollChunks');
 var SwipeEvents = require('util/SwipeEvents');
 var ScrollSection1 = require('modules/pages/scroll/views/scrollSection1');
 var ScrollSection2 = require('modules/pages/scroll/views/scrollSection2');
@@ -19,21 +19,25 @@ module.exports = BaseView.extend({
   events: {},
 
   initialize: function () {
+    this.listenTo(Backbone.pubSub, 'carousel_fullCollectionRetrieved', this.setupSections);
+
     this.attachTo('.main_container');
     this.checkForSection();
-    this.buildPage();
     this.bindEvents();
 
-    PageScroll.init('.scroll_section', this.model.get('currSection'));
+    if (BB.collections.carousel) {
+      this.setupSections();
+    }
+
   },
 
   bindEvents: function() {
     this.$el.on('mousewheel DOMMouseScroll MozMousePixelScroll', function(e) {
-      PageScroll.init_scroll(e);
+      PageScrollChunks.init_scroll(e);
     });
 
-    this.$el.swipeEvents().on('swipeUp',  function(){ PageScroll.moveNext(); })
-      .on('swipeDown',  function(){ PageScroll.movePrev(); });
+    this.$el.swipeEvents().on('swipeUp',  function(){ PageScrollChunks.moveNext(); })
+      .on('swipeDown',  function(){ PageScrollChunks.movePrev(); });
   },
 
   render: function () {
@@ -52,19 +56,25 @@ module.exports = BaseView.extend({
     }
   },
 
+  setupSections: function() {
+    this.buildPage();
+    PageScrollChunks.init('.scroll_section', this.model.get('currSection'));
+  },
+
   buildPage: function() {
-    this.scrollSection1 = new ScrollSection1({model: this.model});
-    this.scrollSection2 = new ScrollSection2({model: this.model});
-    this.scrollSection3 = new ScrollSection3({model: this.model});
+    var coverCollection = BB.collections.carousel.models;
+
+    this.scrollSection1 = new ScrollSection1({model: coverCollection[0]});
+    this.scrollSection2 = new ScrollSection2({model: coverCollection[1]});
+    this.scrollSection3 = new ScrollSection3({model: coverCollection[2]});
   },
 
   navigateHist: function() {
     this.checkForSection();
-    PageScroll.setPage(this.model.get('currSection'));
+    PageScrollChunks.setPage(this.model.get('currSection'));
   },
 
   dispose: function(arg) {
-    console.log('scroll dispose')
     
     // this.$el.off('mousewheel DOMMouseScroll MozMousePixelScroll');
     // this.$el.swipeEvents().off('swipeUp')

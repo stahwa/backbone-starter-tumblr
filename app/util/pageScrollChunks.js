@@ -6,7 +6,7 @@ var lastAnimation = 0,
     sectionArr = []
 
 
-var pageScroll = {
+var pageScrollChunks = {
 
   init: function(sections, currentSection) {
     sectionArr = sections;
@@ -113,4 +113,4 @@ var pageScroll = {
 };
 
 
-module.exports = pageScroll;
+module.exports = pageScrollChunks;
