@@ -7,18 +7,17 @@ var BaseView = require('base/baseView');
 module.exports = BaseView.extend({
 
   tagName: 'div',
-  className: 'scroll_section sec3',
+  className: 'section_content',
   template: require('../templates/scrollSection3.hbs'),
   events: {},
 
   initialize: function () {
-    this.attachTo('.scroll_container .section_wrap');
+    this.attachTo('.scroll_section.sectionthree');
+    this.$el.html(this.template( this.model.toJSON()));
   },
 
   render: function () {
-    this.$el.html(this.template( this.model.toJSON()));
-    // console.log('about view render')
-    // Backbone.pubSub.trigger('viewRendered', 'helloooo payload');
+    // this.$el.html(this.template( this.model.toJSON()));
 
     return this;
   }

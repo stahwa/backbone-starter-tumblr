@@ -19,12 +19,14 @@ var pageScrollChunks = {
     var topPos = 0;
 
     $.each( $(sections), function(i) {
-      $(this).css({
-        position: "absolute",
-        top: topPos + "%"
-      }).attr("data-index", i+1);
+      // $(this).css({
+      //   position: "absolute",
+      //   top: topPos + "%"
+      // }).attr("data-index", i+1);
 
-      topPos = topPos + 100;
+      // topPos = topPos + 100;
+
+      $(this).attr('data-index', i+1);
     });
   },
 
@@ -33,8 +35,8 @@ var pageScrollChunks = {
     var pos = ((indx-1) * 100) * -1;
 
     $(sectionArr).removeClass('active')
-    $('.sec'+indx).addClass('active')
-    this.transformPage(pos, indx);
+    $('.section'+indx).addClass('active')
+    // this.transformPage(pos, indx);
   },
 
   init_scroll: function(e) {
@@ -47,12 +49,60 @@ var pageScrollChunks = {
     }
 
     if (delta < 0) {
-      this.moveNext();
+      // this.moveNext();
+      this.loadNextSection();
     } else {
-      this.movePrev();
+      // this.movePrev();
+      this.loadPrevSection();
     }
 
     lastAnimation = timeNow;
+  },
+
+  loadNextSection: function() {
+    // console.log('loadNextSection')
+    var index = $(sectionArr + ".active").data("index");
+    var current = $(sectionArr + "[data-index='" + index + "']");
+    var next = $(sectionArr + "[data-index='" + (index + 1) + "']");
+
+    if (next.length < 1) {
+      return
+    } else {
+      // console.log('load ',index+1)
+      // var pos = (index * 100) * -1;
+
+      current.removeClass('active')
+      next.addClass('active');
+
+      this.setHistory();
+      Backbone.pubSub.trigger('loadScrollSection', index+1);
+    }
+
+    
+    
+  },
+
+  loadPrevSection: function() {
+    // console.log('loadPrevSection')
+    var index = $(sectionArr + ".active").data("index");
+    var current = $(sectionArr + "[data-index='" + index + "']");
+    var next = $(sectionArr + "[data-index='" + (index - 1) + "']");
+
+    if (next.length < 1) {
+      return
+    } else {
+      // console.log('load ',index-1)
+      // var pos = (index * 100) * -1;
+
+      current.removeClass('active')
+      next.addClass('active')
+
+      this.setHistory();
+      Backbone.pubSub.trigger('loadScrollSection', index-1);
+    }
+
+    
+    
   },
 
   moveNext: function() {

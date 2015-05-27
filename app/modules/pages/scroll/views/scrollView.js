@@ -20,6 +20,7 @@ module.exports = BaseView.extend({
 
   initialize: function () {
     this.listenTo(Backbone.pubSub, 'carousel_fullCollectionRetrieved', this.setupSections);
+    this.listenTo(Backbone.pubSub, 'loadScrollSection', this.loadNewSection);
 
     this.attachTo('.main_container');
     this.checkForSection();
@@ -54,6 +55,7 @@ module.exports = BaseView.extend({
     } else {
       this.model.set('currSection', 'section1');
     }
+    // console.log('checkForSection currSection',this.model.get('currSection'))
   },
 
   setupSections: function() {
@@ -64,9 +66,36 @@ module.exports = BaseView.extend({
   buildPage: function() {
     var coverCollection = BB.collections.carousel.models;
 
-    this.scrollSection1 = new ScrollSection1({model: coverCollection[0]});
-    this.scrollSection2 = new ScrollSection2({model: coverCollection[1]});
-    this.scrollSection3 = new ScrollSection3({model: coverCollection[2]});
+    if (this.currentView) {
+      this.currentView.dispose();
+    };
+
+    switch(this.model.get('currSection')) {
+      case 'sectionone':
+        this.currentView = new ScrollSection1({model: coverCollection[0]});
+        break;
+      case 'sectiontwo':
+        this.currentView = new ScrollSection2({model: coverCollection[1]});
+        break;
+      case 'sectionthree':
+        this.currentView = new ScrollSection3({model: coverCollection[2]});
+        break;
+      default:
+        console.log('the default case')
+    }
+    console.log('build page this.model',this.model)
+
+    // this.section1 = new ScrollSection1({model: coverCollection[0]});
+    // this.section2 = new ScrollSection2({model: coverCollection[1]});
+    // this.section3 = new ScrollSection3({model: coverCollection[2]});
+  },
+
+  loadNewSection: function(sec) {
+    console.log('currSection',this.model.get('currSection'))
+    console.log('load section ',sec)
+    
+    this.checkForSection();
+    this.buildPage();
   },
 
   navigateHist: function() {
@@ -75,14 +104,14 @@ module.exports = BaseView.extend({
   },
 
   dispose: function(arg) {
-    
-    // this.$el.off('mousewheel DOMMouseScroll MozMousePixelScroll');
-    // this.$el.swipeEvents().off('swipeUp')
-    //   .off('swipeDown');
+    this.currentView.dispose();
+    this.$el.off('mousewheel DOMMouseScroll MozMousePixelScroll');
+    this.$el.swipeEvents().off('swipeUp')
+      .off('swipeDown');
 
-    this.scrollSection1.dispose();
-    this.scrollSection2.dispose();
-    this.scrollSection3.dispose();
+    // this.section1.dispose();
+    // this.section2.dispose();
+    // this.section3.dispose();
 
     BaseView.prototype.dispose.apply(this, arguments);
     

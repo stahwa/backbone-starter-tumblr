@@ -7,17 +7,19 @@ var BaseView = require('base/baseView');
 module.exports = BaseView.extend({
 
   tagName: 'div',
-  className: 'scroll_section sec1',
+  className: 'section_content',
   template: require('../templates/scrollSection1.hbs'),
   events: {},
 
   initialize: function () {
-    this.attachTo('.scroll_container .section_wrap');
+    console.log('scrollSection1 init')
+    this.attachTo('.scroll_section.sectionone');
+    this.$el.html(this.template( this.model.toJSON()));
+    // this.render();
   },
 
   render: function () {
-    console.log('this.model',this.model)
-    this.$el.html(this.template( this.model.toJSON()));
+    // this.$el.html(this.template( this.model.toJSON()));
 
     return this;
   }
