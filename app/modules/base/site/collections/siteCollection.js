@@ -8,9 +8,7 @@ var SiteCollection = Backbone.Collection.extend({
 
 	model: postsModel,
   url: APIinfo.createAPIurl(),
-  // offset: 0,
 
-  // OFFSET_AMT: 20,
 
   parse: function(response) {
     return response.response.posts;
@@ -67,10 +65,6 @@ var SiteCollection = Backbone.Collection.extend({
     // IF SOME POSTS ARE LOADED ----------------------------
     if (currLoadedPostAmt < totalPosts) {
 
-      // console.log('BB',BB)
-      // console.log('currLoadedPostAmt',currLoadedPostAmt)
-      // console.log('totalPosts', totalPosts)
-
       if (currLoadedPostAmt == limit) {
         if (BB.currPage == 'index') {
           Backbone.pubSub.trigger(options.type+'_prelimCollectionRetrieved', this.offset);
@@ -103,7 +97,6 @@ var SiteCollection = Backbone.Collection.extend({
   fetchError: function (collection, response) {
     console.log('fetchError');
   },
-
 
   dispose: function() {
     console.log('SiteCollection dispose')

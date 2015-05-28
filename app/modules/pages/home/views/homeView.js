@@ -5,7 +5,6 @@ var BaseView = require('base/baseView');
 var CarouselView = require('modules/base/components/carousel/views/carouselView');
 var BarView = require('modules/base/components/bar/views/barView');
 var PostsView = require('modules/base/components/posts/views/postsView');
-// var SiteCollection = require('modules/base/site/collections/siteCollection');
 
 
 module.exports = BaseView.extend({
@@ -49,7 +48,6 @@ module.exports = BaseView.extend({
   },
 
   dispose: function(arg) {
-    // console.log('home dispose')
     this.carouselView.dispose();
     this.barView.dispose();
     this.postsView.dispose();

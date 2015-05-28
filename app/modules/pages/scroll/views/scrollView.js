@@ -129,8 +129,9 @@ module.exports = BaseView.extend({
 
   navigateHist: function() {
     this.checkForSection();
-    // this.buildPage();
-    console.log('navigating history to', this.model.get('currSection'))
+    this.buildPage();
+
+    BB.site.get('oldSection').dispose();
     PageScrollChunks.setPage(this.model.get('currSection'));
   },
 
