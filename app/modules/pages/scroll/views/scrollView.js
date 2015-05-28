@@ -55,6 +55,7 @@ module.exports = BaseView.extend({
     } else {
       this.model.set('currSection', 'sectionone');
     }
+
     // console.log('checkForSection currSection',this.model.get('currSection'))
   },
 
@@ -62,6 +63,7 @@ module.exports = BaseView.extend({
     this.buildPage();
     console.log('setupSections', this.model)
     PageScrollChunks.init('.scroll_section', this.model.get('currSection'));
+    this.setHistory(this.model.get('currSection'));
   },
 
   buildPage: function(animDir) {
@@ -121,18 +123,21 @@ module.exports = BaseView.extend({
     var page = BB.currPage;
     var pageSectionUrl = '#!/' + page + '/' + newSection;
 
+    console.log('setting history',newSection)
     Backbone.history.navigate(pageSectionUrl, {trigger: false});
   },
 
   navigateHist: function() {
     this.checkForSection();
+    // this.buildPage();
+    console.log('navigating history to', this.model.get('currSection'))
     PageScrollChunks.setPage(this.model.get('currSection'));
   },
 
   dispose: function(arg) {
     console.log('scroll dispose')
     if (BB.site.get('oldSection')) {
-      BB.site.get('oldSection').dispose();
+      // BB.site.get('oldSection').dispose();
     };
     
     BB.site.get('currSection').dispose();
@@ -141,10 +146,6 @@ module.exports = BaseView.extend({
     this.$el.off('mousewheel DOMMouseScroll MozMousePixelScroll');
     this.$el.swipeEvents().off('swipeUp')
       .off('swipeDown');
-
-    // this.section1.dispose();
-    // this.section2.dispose();
-    // this.section3.dispose();
 
     BaseView.prototype.dispose.apply(this, arguments);
     

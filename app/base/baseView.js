@@ -28,7 +28,6 @@ module.exports = Backbone.View.extend({
   },
 
   dispose: function() {
-    console.log('main dispose function', this)
     this.remove();
     this.unbind();
     this.off();

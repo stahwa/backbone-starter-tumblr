@@ -28,7 +28,7 @@ module.exports = BaseView.extend({
   },
 
   render: function () {
-    // console.log('render permalink')
+    console.log('render permalink')
     this.$el.html( this.template( this.model.toJSON()) );
     if (BB.collections.posts) {
       this.filterPosts();
@@ -116,6 +116,7 @@ module.exports = BaseView.extend({
   },
 
   filterPosts: function() {
+    console.log('filterPosts')
     this.grabIdFromURL();
     // this.permaCollection.each(this.findPlaceinArr, this);
     

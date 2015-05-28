@@ -86,10 +86,12 @@ var SiteCollection = Backbone.Collection.extend({
 
     // IF ALL POSTS ARE LOADED ----------------------------
     if (currLoadedPostAmt == totalPosts) {
+
       if (BB.collections._info[options.type].type == 'carousel') {
         Backbone.pubSub.trigger(options.type+'_fullCollectionRetrieved', this.offset);
       }
-      if (BB.currPage == 'permalink') {
+      // if (BB.currPage == 'permalink') {
+      if ((BB.currPage == 'permalink') && (BB.collections._info[options.type].type == 'posts')) {
         Backbone.pubSub.trigger('perma_fullCollectionRetrieved', this.offset);
         Backbone.pubSub.trigger('remove_preloader', BB.currPage);
       };
