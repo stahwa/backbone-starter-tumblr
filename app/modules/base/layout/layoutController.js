@@ -76,7 +76,7 @@ module.exports = BaseView.extend({
   animEnd: function(payload) {
     BB.site.set('isTransitioning', false);
     // console.log('isTransitioning',BB.site.get('isTransitioning'))
-    // console.log('oldview',BB.site.get('oldView'))
+    console.log('oldview',BB.site.get('oldView'))
     BB.site.get('oldView').dispose();
 
   },

@@ -7,15 +7,18 @@ module.exports = Backbone.Model.extend({
   	page: 'scroll',
     title: 'Scroll data from model',
     currSection: 'sectionone',
-    sectionone: {
-    	title: 'Scroll section 1'
-    },
-    sectiontwo: {
-    	title: 'Scroll section 2'
-    },
-    sectionthree: {
-      title: 'Scroll section 3'
+    sections: {
+      section_1: {
+        secName: 'sectionone'
+      },
+      section_2: {
+        secName: 'sectiontwo'
+      },
+      section_3: {
+        secName: 'sectionthree'
+      }
     }
+    
   }
 
 });

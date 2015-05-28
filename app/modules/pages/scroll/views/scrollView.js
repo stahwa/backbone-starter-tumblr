@@ -53,49 +53,75 @@ module.exports = BaseView.extend({
     if (secondPart) {
       this.model.set('currSection', secondPart);
     } else {
-      this.model.set('currSection', 'section1');
+      this.model.set('currSection', 'sectionone');
     }
     // console.log('checkForSection currSection',this.model.get('currSection'))
   },
 
   setupSections: function() {
     this.buildPage();
+    console.log('setupSections', this.model)
     PageScrollChunks.init('.scroll_section', this.model.get('currSection'));
   },
 
-  buildPage: function() {
+  buildPage: function(animDir) {
     var coverCollection = BB.collections.carousel.models;
 
     if (this.currentView) {
-      this.currentView.dispose();
+      BB.site.set({'oldSection': this.currentView});
+
+      BB.site.get('oldSection').animOut(animDir);
+      // this.currentView.dispose();
     };
 
     switch(this.model.get('currSection')) {
       case 'sectionone':
-        this.currentView = new ScrollSection1({model: coverCollection[0]});
+        this.currentView = new ScrollSection1({model: coverCollection[0], dir: animDir});
+        BB.site.set({'currSectionIndex': 1});
         break;
       case 'sectiontwo':
-        this.currentView = new ScrollSection2({model: coverCollection[1]});
+        this.currentView = new ScrollSection2({model: coverCollection[1], dir: animDir});
+        BB.site.set({'currSectionIndex': 2});
         break;
       case 'sectionthree':
-        this.currentView = new ScrollSection3({model: coverCollection[2]});
+        this.currentView = new ScrollSection3({model: coverCollection[2], dir: animDir});
+        BB.site.set({'currSectionIndex': 3});
         break;
       default:
         console.log('the default case')
     }
-    console.log('build page this.model',this.model)
 
-    // this.section1 = new ScrollSection1({model: coverCollection[0]});
-    // this.section2 = new ScrollSection2({model: coverCollection[1]});
-    // this.section3 = new ScrollSection3({model: coverCollection[2]});
+    BB.site.set({'currSection': this.currentView});
+    BB.site.get('currSection').animIn(animDir);
+
   },
 
   loadNewSection: function(sec) {
-    console.log('currSection',this.model.get('currSection'))
-    console.log('load section ',sec)
+    var newSec;
+    var animDir;
+
+    for (name in this.model.get('sections')) {
+      if (name.substr(name.length - 1) == sec) {
+        newSec = this.model.get('sections')[name].secName;
+        this.setHistory(newSec);
+      }
+    }
+
+    if (sec > BB.site.get('currSectionIndex')) {
+      animDir = 'animUp'
+    } else {
+      animDir = 'animDown'
+    }
     
     this.checkForSection();
-    this.buildPage();
+    this.buildPage(animDir);
+  },
+
+  setHistory: function(newSection) {
+    var page = BB.currPage;
+    var pageSectionUrl = '#!/' + page + '/' + newSection;
+
+    Backbone.history.navigate(pageSectionUrl, {trigger: false});
   },
 
   navigateHist: function() {
@@ -104,7 +130,14 @@ module.exports = BaseView.extend({
   },
 
   dispose: function(arg) {
-    this.currentView.dispose();
+    console.log('scroll dispose')
+    if (BB.site.get('oldSection')) {
+      BB.site.get('oldSection').dispose();
+    };
+    
+    BB.site.get('currSection').dispose();
+
+    // this.currentView.dispose();
     this.$el.off('mousewheel DOMMouseScroll MozMousePixelScroll');
     this.$el.swipeEvents().off('swipeUp')
       .off('swipeDown');
