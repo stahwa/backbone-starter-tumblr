@@ -78,7 +78,7 @@ module.exports = BaseView.extend({
     // console.log('isTransitioning',BB.site.get('isTransitioning'))
     console.log('oldview',BB.site.get('oldView'))
     BB.site.get('oldView').dispose();
-
+    // Backbone.pubSub.trigger('remove_preloader', BB.currPage);
   },
 
   dispose: function(arg) {

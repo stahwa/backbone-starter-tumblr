@@ -33,18 +33,48 @@ module.exports = BaseView.extend({
   },
 
   bindEvents: function() {
+    // var debouncedUp = _.debounce( PageScrollChunks.loadNextSection, 1000, true);
+    var debounced = _.debounce( this.swipeDebounce, 700, true);
+
     this.$el.on('mousewheel DOMMouseScroll MozMousePixelScroll', function(e) {
       PageScrollChunks.init_scroll(e);
     });
 
-    this.$el.swipeEvents().on('swipeUp',  function(){ PageScrollChunks.moveNext(); })
-      .on('swipeDown',  function(){ PageScrollChunks.movePrev(); });
+    this.$el.swipeEvents().on('swipeUp',  function(){ debounced('up'); })
+      .on('swipeDown',  function(){ debounced('down'); });
+
   },
 
   render: function () {
     this.$el.html(this.template( this.model.toJSON()));
     return this;
   },
+
+  swipeDebounce: function(dir) {
+    if (dir == 'up') {
+      console.log('swipe UP')
+      PageScrollChunks.loadNextSection();
+
+    } else if (dir == 'down') {
+      console.log('swipe DOWN')
+      PageScrollChunks.loadPrevSection();
+    };
+  },
+
+  // swipeDebounce: function(dir) {
+  //   var debounced;
+  //   if (dir == 'up') {
+  //     console.log('swipe UP')
+  //     debounced = _.debounce( PageScrollChunks.loadNextSection, 3000, true);
+  //     return debounced();
+  //   } else if (dir == 'down') {
+  //     console.log('swipe DOWN')
+  //     debounced = _.debounce( PageScrollChunks.loadPrevSection, 3000, true);
+  //     return debounced();
+  //   };
+
+    
+  // },
 
   checkForSection: function() {
     var url = window.location.href;
@@ -94,7 +124,10 @@ module.exports = BaseView.extend({
     }
 
     BB.site.set({'currSection': this.currentView});
-    BB.site.get('currSection').animIn(animDir);
+    setTimeout(function(){
+      BB.site.get('currSection').animIn();
+    }, 0);
+    
 
   },
 
@@ -123,7 +156,6 @@ module.exports = BaseView.extend({
     var page = BB.currPage;
     var pageSectionUrl = '#!/' + page + '/' + newSection;
 
-    console.log('setting history',newSection)
     Backbone.history.navigate(pageSectionUrl, {trigger: false});
   },
 
@@ -136,7 +168,6 @@ module.exports = BaseView.extend({
   },
 
   dispose: function(arg) {
-    console.log('scroll dispose')
     if (BB.site.get('oldSection')) {
       // BB.site.get('oldSection').dispose();
     };

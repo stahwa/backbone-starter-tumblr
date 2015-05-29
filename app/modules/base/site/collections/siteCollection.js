@@ -68,7 +68,7 @@ var SiteCollection = Backbone.Collection.extend({
       if (currLoadedPostAmt == limit) {
         if (BB.currPage == 'index') {
           Backbone.pubSub.trigger(options.type+'_prelimCollectionRetrieved', this.offset);
-          Backbone.pubSub.trigger('remove_preloader', BB.currPage);
+          // Backbone.pubSub.trigger('remove_preloader', BB.currPage);
         }
       };
 
@@ -87,7 +87,7 @@ var SiteCollection = Backbone.Collection.extend({
       // if (BB.currPage == 'permalink') {
       if ((BB.currPage == 'permalink') && (BB.collections._info[options.type].type == 'posts')) {
         Backbone.pubSub.trigger('perma_fullCollectionRetrieved', this.offset);
-        Backbone.pubSub.trigger('remove_preloader', BB.currPage);
+        // Backbone.pubSub.trigger('remove_preloader', BB.currPage);
       };
       // Backbone.pubSub.trigger('fullCollectionRetrieved', BB.currPage);
     }

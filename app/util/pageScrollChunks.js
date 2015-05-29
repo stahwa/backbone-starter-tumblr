@@ -54,7 +54,7 @@ var pageScrollChunks = {
     lastAnimation = timeNow;
   },
 
-  loadNextSection: function() {
+  loadNextSection: function(e) {
     var current = $(sectionArr + "[data-index='" + currIndex + "']");
     var next = $(sectionArr + "[data-index='" + (currIndex+1) + "']");
 

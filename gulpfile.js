@@ -65,6 +65,7 @@ gulp.task('vendor', function() {
   stream = gulp.src([
   		paths.src + '../bower_components/jquery/dist/jquery.min.js',
       paths.src + '../bower_components/swiper/dist/js/swiper.jquery.min.js',
+      paths.src + '../node_modules/gsap/src/minified/TweenMax.min.js',
   		paths.src + '../node_modules/backbone/node_modules/underscore/underscore-min.js',
       paths.src + '../node_modules/backbone/backbone-min.js'
 

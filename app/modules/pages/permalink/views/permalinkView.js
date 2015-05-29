@@ -28,7 +28,6 @@ module.exports = BaseView.extend({
   },
 
   render: function () {
-    console.log('render permalink')
     this.$el.html( this.template( this.model.toJSON()) );
     if (BB.collections.posts) {
       this.filterPosts();

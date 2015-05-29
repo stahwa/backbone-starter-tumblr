@@ -39,7 +39,7 @@ module.exports = BaseView.extend({
     this.$el.addClass(startingPos);
   },
 
-  animIn:function(animDir) {
+  animIn:function() {
     var _this = this;
     setTimeout(function(){
       _this.$el.addClass('center');
