@@ -21,6 +21,7 @@
     @include transform(translate3d(0, 0%, 0));
     .section_content {
       height: 100%;
+      @include transitionTransform(0.7s cubic-bezier(0.465, 0.183, 0.153, 0.946));
       .post_img {
         width: 100%;
         height: 100%;
@@ -34,25 +35,23 @@
         color: #fff;
       }
       &.above {
-        // @include transitionTransform(0.5s cubic-bezier(0.465, 0.183, 0.153, 0.946));
         @include transform(translate3d(0, -100%, 0));
         z-index: 10;
       }
       &.below {
-        // @include transitionTransform(0.5s cubic-bezier(0.465, 0.183, 0.153, 0.946));
         @include transform(translate3d(0, 100%, 0));
         z-index: 10;
       }
       &.center {
-        @include transitionTransform(0.7s cubic-bezier(0.465, 0.183, 0.153, 0.946));
+        // @include transitionTransform(0.7s cubic-bezier(0.465, 0.183, 0.153, 0.946));
         @include transform(translate3d(0, 0%, 0));
       }
       &.animUp {
-        @include transitionTransform(0.7s cubic-bezier(0.465, 0.183, 0.153, 0.946));
+        // @include transitionTransform(0.7s cubic-bezier(0.465, 0.183, 0.153, 0.946));
         @include transform(translate3d(0, -30%, 0));
       }
       &.animDown {
-        @include transitionTransform(0.7s cubic-bezier(0.465, 0.183, 0.153, 0.946));
+        // @include transitionTransform(0.7s cubic-bezier(0.465, 0.183, 0.153, 0.946));
         @include transform(translate3d(0, 30%, 0));
       }
     }
